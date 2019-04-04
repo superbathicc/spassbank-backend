@@ -1,0 +1,29 @@
+{
+  "name": "spassbank-backend",
+  "version": "1.0.0",
+  "description": "the HTTP backend for this fun bank",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.2",
+    "handlebars": "^4.1.1",
+    "mongoose": "^5.4.21",
+    "yaml": "^1.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/superbathicc/spassbank-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/superbathicc/spassbank-backend/issues"
+  },
+  "homepage": "https://github.com/superbathicc/spassbank-backend#readme"
+}

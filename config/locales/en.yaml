@@ -1,0 +1,7 @@
+bank_name: Spassbank
+
+welcome: Welcome to the Spassbank.
+
+label_username: Username
+label_password: Password
+login_submit: Login

@@ -1,0 +1,17 @@
+{{#> 'layouts/main'}}
+  {{#*inline "title"}}
+  Index
+  {{/inline}}
+  
+  {{#*inline "content"}}
+
+  <form method="POST" target="/api/login">
+    <label for="username">{{text req 'label_username'}}</label>
+    <input type="text" name="username" />
+    <label for="password">{{text req 'label_password'}}</label>
+    <input type="text" name="password" />
+    <button type="submit">{{text req 'login_submit'}}</button>
+  </form>
+
+  {{/inline}}
+{{/layouts/main}}
