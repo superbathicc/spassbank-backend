@@ -5,11 +5,11 @@
   
   {{#*inline "content"}}
 
-  <form method="POST" target="/api/login">
+  <form method="POST" action="/api/login">
     <label for="username">{{text req 'label_username'}}</label>
     <input type="text" name="username" />
     <label for="password">{{text req 'label_password'}}</label>
-    <input type="text" name="password" />
+    <input type="passwort" name="password" />
     <button type="submit">{{text req 'login_submit'}}</button>
   </form>
 
