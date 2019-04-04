@@ -14,6 +14,8 @@ const cfg = require('./config/default');
 // init mongodb
 mongoose.connect(require('./config/db').url, {
   useNewUrlParser: true
+}).catch(err => {
+  console.log('mongodb unavailable ... see the error below\n'+err);
 });
 
 // init express
