@@ -1,0 +1,16 @@
+{{#> 'layouts/main'}}
+  {{#*inline "title"}}
+  Index
+  {{/inline}}
+  
+  {{#*inline "content"}}
+
+  <h1>Index of {{path}}</h1>
+  <ul>
+  {{#each items}}
+    <li><span>{{type}}</span> <a href="./{{name}}">{{name}}</a> ({{size}})</li>
+  {{/each}}
+  </ul>
+
+  {{/inline}}
+{{/layouts/main}}
