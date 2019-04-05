@@ -1,13 +1,16 @@
 const mongoose = require('mongoose');
 
 let accountSchema = new mongoose.Schema({
-  pinHash: {
+  password: {
     type: String,
     required: true
   },
   balance: {
     type: Number,
     required: true
+  },
+  hash: {
+    type: String
   }
 });
 

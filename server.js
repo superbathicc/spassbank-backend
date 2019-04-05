@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
 const handlebars = require('handlebars');
+const session = require('express-session');
 const YAML = require('yaml');
 
 const router = require('./app/routes');
@@ -42,8 +43,6 @@ localeDirs.forEach((localeFile) => {
   }
 });
 
-console.log(locales);
-
 function getLocaleString(l, key) {
   if(typeof l == 'string') {
     var locale = l.split(',')[0].split(';')[0];
@@ -78,7 +77,32 @@ app.engine('hbs', expressHandlebars({
   partialsDir: path.join(__dirname, 'views', 'partials')
 }))
 
+var sess = {
+  secret: "why are you not laughing",
+  resave: false,
+  saveUninitialized: true,
+}
+
 app.set('view engine', 'hbs');
+if(app.get('env') === 'production') {
+  app.set('trust proxy', 1);
+  sess.cookie = {secure: true}
+}
+
+
+app.use(bodyParser.urlencoded({
+  extended: true,
+  type: 'application/x-www-form-urlencoded'
+}));
+
+app.use(bodyParser.json({
+  type: 'application/json'
+}));
+
+app.use(function(req, res, next) {
+  console.log(`[${new Date()}][${req.method}]${req.path} :\nheaders: ${JSON.stringify(req.headers, null, "  ")}\nbody: ${JSON.stringify(req.body, null, "  ")}`);
+  next();
+});
 
 app.use(function(req, res, next) {
   res.locals.req = req;
@@ -86,14 +110,8 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(bodyParser.json({
-  type: 'application/json'
-}));
 
-app.use(bodyParser.urlencoded({
-  extended: true,
-  type: 'application/x-wwww-form-urlencoded'
-}));
+app.use(session(sess));
 
 router(app);
 

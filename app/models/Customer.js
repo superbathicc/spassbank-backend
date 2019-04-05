@@ -1,6 +1,18 @@
 const mongoose = require('mongoose');
 
 let customerSchema = new mongoose.Schema({
+  hash: {
+    type: String,
+    required: true
+  },
+  username: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
   name: {
     first: {
       type: String,

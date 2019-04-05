@@ -11,12 +11,14 @@ let employeeSchema = new mongoose.Schema({
       required: true
     }
   },
-  userName: {
+  username: {
     type: String,
     required: true
   },
-  passwordHash: {
+  password: {
     type: String,
     required: true
-  }
+  },
 });
+
+module.exports = mongoose.model("Employee", employeeSchema);

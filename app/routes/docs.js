@@ -54,7 +54,7 @@ module.exports = function(app) {
     if(fs.existsSync(p)) {
       var stat = fs.statSync(p);
       if(stat.isFile()) {
-        res.render(path.parse(p).name, {
+        res.render(path.relative('/', req.path), {
           req: req
         });
       } else throw new Error(`The file at ${p} was not a file.`);
