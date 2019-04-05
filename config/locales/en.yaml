@@ -2,6 +2,24 @@ bank_name: Spassbank
 
 welcome: Welcome to the Spassbank.
 
+login: Login
 label_username: Username
 label_password: Password
 login_submit: Login
+
+settings: Settings
+
+status: Status
+check_status: Check status
+refill: Refill money
+
+money_supply: Money supply
+
+last_maintenance: Last maintenance
+next_maintenance: Next planned maintenance
+
+submit: Submit
+
+amount_to_refill: How much money do you want to refill?
+
+current: Current

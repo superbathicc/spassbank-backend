@@ -1,2 +1,24 @@
 bank_name: Spaßbank
 welcome: Herzlich Willkommen bei der Spaßbank. 
+
+login: Anmeldung
+label_username: Benutzername
+label_password: Passwort
+login_submit: Einloggen
+
+settings: Einstellungen
+
+status: Status
+check_status: Status prüfen
+refill: Geld nachfüllen
+
+money_supply: Geldstand 
+
+last_maintenance: Letzte Wartung
+next_maintenance: Nächste geplante Wartung
+
+submit: Senden
+
+current: Aktuell
+
+amount_to_refill: Wie viel Geld wollen Sie nachfüllen?
