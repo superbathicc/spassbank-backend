@@ -12,6 +12,11 @@ let accountSchema = new mongoose.Schema({
   },
   hash: {
     type: String
+  },
+  customer: {
+    type: mongoose.Types.ObjectId,
+    ref: "Customer",
+    required: true
   }
 });
 

@@ -49,10 +49,6 @@ let customerSchema = new mongoose.Schema({
       required: false
     }
   },
-  accounts: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Account"
-  }]
 });
 
 module.exports = mongoose.model("Customer", customerSchema)
