@@ -1,10 +1,10 @@
 {{#> 'layouts/main'}}
   {{#*inline "title"}}
-  Admin Login
+  Create Admin
   {{/inline}}
   
   {{#*inline "content"}}
-  <form action="/api/login/admin" method="POST">
+  <form action="/api/admin" method="POST">
     <label for="username">{{text req "label_username"}}</label>
     <input type="text" name="username" /><br />
     <label for="password">{{text req "label_password"}}</label>

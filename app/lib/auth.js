@@ -1,18 +1,18 @@
-let accountApi = require('../routes/api/account');
-let customerApi = require('../routes/api/customer');
-let employeeApi = require('../routes/api/employee');
-let adminApi = require('../routes/api/admin');
+const accountApi = require('../routes/api/account');
+const customerApi = require('../routes/api/customer');
+const employeeApi = require('../routes/api/employee');
+const adminApi = require('../routes/api/admin');
 
 [accountApi, customerApi, employeeApi, adminApi].forEach(api => console.log(api));
 
 function parseHeader(req) {
-  var h = req.get('Authorization');
+  let h = req.get('Authorization');
   if(typeof h == 'string') {
-    var result = {};
+    let result = {};
     h.split(',').map(hs => {
-      var arr = hs.split(' ').filter(_ => _ !== "");
-      var key = arr.shift();
-      var value = arr.shift();
+      let arr = hs.split(' ').filter(_ => _ !== "");
+      let key = arr.shift();
+      let value = arr.shift();
       return {key, value};
     }).forEach(hs => {
       result[hs.key] = hs.value;
@@ -25,9 +25,9 @@ function parseHeader(req) {
 
 async  function checkAccountAuth(req, res, next) {
   try {
-    var auth = parseHeader(req);
+    let auth = parseHeader(req);
     if(typeof auth["Account"] == 'string') {
-      var account = await accountApi.getOneByHash(auth["Account"]);
+      let account = await accountApi.getOneByHash(auth["Account"]);
       if(account) {
         req.session.account = account;
         next()
@@ -37,7 +37,7 @@ async  function checkAccountAuth(req, res, next) {
     }
   } catch(err) {
     if(req.session.account) {
-      var account = await accountApi.getOneByHash(req.session.account.hash);
+      let account = await accountApi.getOneByHash(req.session.account.hash);
       if(account) {
         req.session.account = account;
         next();
@@ -50,9 +50,9 @@ async  function checkAccountAuth(req, res, next) {
 
 async function checkCustomerAuth(req, res, next) {
   try {
-    var auth = parseHeader(req);
+    let auth = parseHeader(req);
     if(typeof auth["Customer"] == 'string') {
-      var customer = await customerApi.getOneByHash(auth["Customer"]);
+      let customer = await customerApi.getOneByHash(auth["Customer"]);
       if(customer) {
         req.session.customer = customer;
         next()
@@ -62,7 +62,7 @@ async function checkCustomerAuth(req, res, next) {
     }
   } catch(err) {
     if(req.session.customer) {
-      var customer = await customerApi.getOneByHash(req.session.customer.hash);
+      let customer = await customerApi.getOneByHash(req.session.customer.hash);
       if(customer) {
         req.session.customer = customer;
         next();
@@ -75,9 +75,9 @@ async function checkCustomerAuth(req, res, next) {
 
 async function checkEmployeeAuth(req, res, next) {
   try {
-    var auth = parseHeader(req);
+    let auth = parseHeader(req);
     if(typeof auth["Employee"] == 'string') {
-      var employee = await employeeApi.getOneByHash(auth["Employee"]);
+      let employee = await employeeApi.getOneByHash(auth["Employee"]);
       if(employee) {
         req.session.employee = employee;
         next()
@@ -87,7 +87,7 @@ async function checkEmployeeAuth(req, res, next) {
     }
   } catch(err) {
     if(req.session.employee) {
-      var employee = await employeeApi.getOneByHash(req.session.employee.hash);
+      let employee = await employeeApi.getOneByHash(req.session.employee.hash);
       if(employee) {
         req.session.employee = employee;
         next();
@@ -99,11 +99,10 @@ async function checkEmployeeAuth(req, res, next) {
 }
 
 async function checkAdminAuth(req, res, next) {
-  console.log('loooooog')
   try {
-    var auth = parseHeader(req);
+    let auth = parseHeader(req);
     if(typeof auth["Employee"] == 'string') {
-      var admin = await adminApi.getOneByHash(auth["Employee"]);
+      let admin = await adminApi.getOneByHash(auth["Employee"]);
       if(admin) {
         req.session.admin = admin;
         next()
@@ -113,13 +112,15 @@ async function checkAdminAuth(req, res, next) {
     }
   } catch(err) {
     if(req.session.admin) {
-      var admin = await adminApi.getOneByHash(req.session.admin.hash);
+      let admin = await adminApi.getOneByHash(req.session.admin.hash);
       if(admin) {
         req.session.admin = admin;
         next();
       } else {
         res.sendStatus(401);
       }
+    } else {
+      res.sendStatus(401);
     }
   }
 }

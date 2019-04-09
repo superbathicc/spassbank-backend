@@ -1,3 +1,5 @@
+const adminApi = require('./admin');
+
 module.exports = function(app) {
-  require('./admin').router(app);
+  adminApi.router(app);
 }

@@ -1,21 +1,20 @@
 const Admin = require('../../models/Admin');
-const auth = require('../../lib/auth');
 const crypto = require('crypto');
 
 async function getById(id) {
-  var q = Admin.findById(id);
+  let q = Admin.findById(id);
   return await q.exec();
 }
 
 async function getOneByHash(hash) {
-  var q = Admin.findOne({
+  let q = Admin.findOne({
     hash
   });
   return await q.exec();
 }
 
 async function getOneByUsernameAndPassword(username, password) {
-  var q = Admin.findOne({
+  let q = Admin.findOne({
     username,
     password
   });
@@ -23,7 +22,7 @@ async function getOneByUsernameAndPassword(username, password) {
 }
 
 async function create(username, password) {
-  var admin = new Admin({
+  let admin = new Admin({
     username: username,
     password: crypto.createHash('sha256').update(password).digest('hex')
   });
@@ -53,7 +52,7 @@ async function handleGetAdmin(req, res) {
 
 async function handlePostAdmin(req, res) {
   if(req.body.username && req.body.password) {
-    var admin = await create(req.body.username, req.body.password);
+    let admin = await create(req.body.username, req.body.password);
     res.status(201).json(admin);
   } else {
     res.sendStatus(400);
@@ -63,7 +62,7 @@ async function handlePostAdmin(req, res) {
 async function handlePostLoginAdmin(req, res) {
   if(!req.body) res.sendStatus(400);
   if(req.body.username && req.body.password) {
-    var admin = await getOneByUsernameAndPassword(
+    let admin = await getOneByUsernameAndPassword(
       req.body.username,
       crypto.createHash('sha256').update(req.body.password).digest('hex')
     );
@@ -79,6 +78,8 @@ async function handlePostLoginAdmin(req, res) {
 }
 
 function router(app) {
+  let auth = require('../../lib/auth');
+
   app.get('/api/admin/:adminId', auth.checkAdminAuth, handleGetAdmin);
   app.post('/api/admin', auth.checkAdminAuth, handlePostAdmin);
   app.post('/api/login/admin', handlePostLoginAdmin);
@@ -96,12 +97,14 @@ new Promise(async (resolve) => {
 
 module.exports = {
   router,
-
+  
   handleGetAdmin,
   handlePostAdmin,
   handlePostLoginAdmin,
-
+  
+  create,
   getById,
   getOneByHash,
   getOneByUsernameAndPassword
-}
+};
+
