@@ -67,7 +67,7 @@ async function handlePostLoginAdmin(req, res) {
       crypto.createHash('sha256').update(req.body.password).digest('hex')
     );
     if(admin) {
-      req.session.admin = admin;
+      req.session["Admin"] = admin;
       res.status(200).json(admin);
     } else {
       res.sendStatus(401);

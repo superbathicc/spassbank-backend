@@ -41,7 +41,7 @@ function getCheckAuthFunction(key, api) {
     } catch(err) {
       if(req.session[key]) {
         let _ = await api.getOneByHash(req.session[key].hash);
-        if(admin) {
+        if(_) {
           req.session[key] = _;
           next();
         } else {
