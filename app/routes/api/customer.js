@@ -50,6 +50,7 @@ async function handlePostLoginCustomer(req, res) {
         res.sendStatus(401);
       }
     } catch(err) {
+      console.log(err);
       res.sendStatus(500);
     }
   } else {
@@ -71,6 +72,7 @@ async function handleGetCustomer(req, res) {
     try {
       res.status(200).json(await getById(req.params.customerId));
     } catch(err) {
+      console.log(err)
       res.sendStatus(500);
     }
   } else res.sendStatus(400);
