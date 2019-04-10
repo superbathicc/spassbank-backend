@@ -3,7 +3,6 @@ const crypto = require('crypto');
 
 async function getById(id) {
   let q = Customer.findById(id);
-  q.populate("accounts");
   return await q.exec();
 }
 
