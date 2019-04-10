@@ -71,7 +71,6 @@ async function handleGetTransactions(req, res) {
 function router(app) {
   app.get('/api/transaction/:transactionId', handleGetTransaction);
   app.get('/api/transaction', handleGetTransactions);
-  app.post('/api/transaction', handlePostTransaction);
 }
 
 module.exports = {
