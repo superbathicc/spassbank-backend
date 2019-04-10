@@ -1,7 +1,13 @@
 const mongoose = require('mongoose');
-const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 let accountSchema = new mongoose.Schema({
+  accountId: {
+    type: Number,
+    default: function() {
+      return Math.floor(Math.random()*9*1000*1000*1000) + 1*1000*1000*1000 - 1
+    },
+    unique: true
+  },
   password: {
     type: String,
     required: true
@@ -19,7 +25,5 @@ let accountSchema = new mongoose.Schema({
     required: true
   }
 });
-
-accountSchema.plugin(AutoIncrement, {inc_field: 'accountId'});
 
 module.exports = mongoose.model("Account", accountSchema);

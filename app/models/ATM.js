@@ -5,57 +5,91 @@ let atmModel = new mongoose.Schema({
     type: String,
     required: true
   },
+  description: {
+    type: String,
+    required: false
+  },
+  hash: {
+    type: String,
+    required: false
+  },
   status: {
     maintenanceRequired: {
       type: Boolean,
-      required: true
+      required: true,
+      default: false,
     },
     contains: {
       "1ct": {
-        type: Number
+        type: Number,
+        default: 0,
+        max: 500
       },
       "2ct": {
-        type: Number
+        type: Number,
+        default: 0,
+        max: 500
       },
       "5ct": {
-        type: Number
+        type: Number,
+        default: 0,
+        max: 500
       },
       "10ct": {
-        type: Number
+        type: Number,
+        default: 0,
+        max: 500,
       },
       "20ct": {
-        type: Number
+        type: Number,
+        default: 0,
+        max: 500,
       },
       "50ct": {
-        type: Number
+        type: Number,
+        default: 0,
+        max: 500
       },
       "1€": {
-        type: Number
+        type: Number,
+        default: 0,
+        max: 500
       },
       "2€": {
-        type: Number
+        type: Number,
+        default: 0,
+        max: 500
       },
       "5€": {
-        type: Number
+        type: Number,
+        default: 100,
+        max: 250
       },
       "10€": {
-        type: Number
+        type: Number,
+        default: 100,
+        max: 250
       },
       "20€": {
-        type: Number
+        type: Number,
+        default: 100,
+        max: 250
       },
       "50€": {
-        type: Number
+        type: Number,
+        default: 100,
+        max: 250
       },
       "100€": {
-        type: Number
+        type: Number,
+        default: 100,
+        max: 250
       },
       "200€": {
-        type: Number
+        type: Number,
+        default: 100,
+        max: 250
       },
-      "500€": {
-        type: Number
-      }
     }
   }
 })
