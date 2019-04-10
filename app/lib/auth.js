@@ -3,8 +3,6 @@ const customerApi = require('../routes/api/customer');
 const employeeApi = require('../routes/api/employee');
 const adminApi = require('../routes/api/admin');
 
-[accountApi, customerApi, employeeApi, adminApi].forEach(api => console.log(api));
-
 function parseHeader(req) {
   let h = req.get('Authorization');
   if(typeof h == 'string') {

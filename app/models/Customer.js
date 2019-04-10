@@ -1,5 +1,22 @@
 const mongoose = require('mongoose');
 
+/**
+ * @typedef Properties
+ * @property {String} hash
+ * @property {String} username
+ * @property {String} password
+ * @property {Object} name
+ * @property {String} name.first
+ * @property {String} name.last
+ * @property {Number} dateOfBirth
+ * @property {Object} address
+ * @property {String} address.country
+ * @property {String} address.city
+ * @property {String} address.postcode
+ * @property {String} address.street
+ * @property {String} address.houseNumber
+ */
+
 let customerSchema = new mongoose.Schema({
   hash: {
     type: String,
