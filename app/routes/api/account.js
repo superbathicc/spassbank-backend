@@ -15,6 +15,14 @@ async function getOneByHash(hash, options) {
   return await query.execute(q, options);
 }
 
+async function getOneByAccountIdAndPassword(accountId, password) {
+  let q = Account.findOne({
+    accountId,
+    password
+  });
+  return await q.exec();
+}
+
 async function handleGetAccount(req, res) {
   try {
     res.status(200).json(await getById(req.params.accountId));
@@ -24,15 +32,29 @@ async function handleGetAccount(req, res) {
 }
 
 async function handlePostLoginAccount(req, res) {
-  try {
-    var acc = await getById(req.body.accountId);
-  } catch(err) {
-    res.status(500).json(err);
+  if(!req.body) res.sendStatus(400);
+  if(req.body.accountId && req.body.password) {
+    try {
+      let account = await getOneByAccountIdAndPassword(
+        req.body.accountId,
+        crypto.createHash('sha256').update(req.body.password).digest('hex')
+      );
+      if(account) {
+        req.session["Account"] = account;
+        req.status(200).json(account);
+      }
+    } catch(err) {
+      res.sendStatus(500);
+    }
+  } else {
+    res.sendStatus(400);
   }
 }
 
 function router(app) {
-  app.get('/api/account/:accountId', handleGetAccount);
+  let auth = require('../../lib/auth');
+
+  app.get('/api/account/:accountId', auth.checkAdminAuth, auth.checkAccountAuth, handleGetAccount);
   app.post('/api/login/account', handlePostLoginAccount);
 }
 

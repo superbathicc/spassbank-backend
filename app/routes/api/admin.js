@@ -62,15 +62,19 @@ async function handlePostAdmin(req, res) {
 async function handlePostLoginAdmin(req, res) {
   if(!req.body) res.sendStatus(400);
   if(req.body.username && req.body.password) {
-    let admin = await getOneByUsernameAndPassword(
-      req.body.username,
-      crypto.createHash('sha256').update(req.body.password).digest('hex')
-    );
-    if(admin) {
-      req.session["Admin"] = admin;
-      res.status(200).json(admin);
-    } else {
-      res.sendStatus(401);
+    try {
+      let admin = await getOneByUsernameAndPassword(
+        req.body.username,
+        crypto.createHash('sha256').update(req.body.password).digest('hex')
+      );
+      if(admin) {
+        req.session["Admin"] = admin;
+        res.status(200).json(admin);
+      } else {
+        res.sendStatus(401);
+      }
+    } catch(err) {
+      res.sendStatus(500);
     }
   } else {
     res.sendStatus(400);

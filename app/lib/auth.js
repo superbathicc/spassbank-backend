@@ -23,40 +23,60 @@ function parseHeader(req) {
   }
 }
 
-function getCheckAuthFunction(key, api) {
+/**
+ * @typedef {Object} GetCheckAuthFuctionOptions
+ * @property {Boolean} endOnFailure ends the request with a status code upon failure
+ * 
+ * @param {string} key 
+ * @param {object} api 
+ * @param {GetCheckAuthFuctionOptions} options 
+ */
+function getCheckAuthFunction(key, api, options) {
   return async function(req, res, next) {
+    if(!req.auth) req.auth = {};
     try {
       let auth = parseHeader(req);
       if(typeof auth[key] == 'string') {
         let _ = await api.getOneByHash(auth[key]);
         if(_) {
+          req.auth[key] = true;
           req.session[key] = _;
           next()
         } else {
-          res.sendStatus(401);
+          req.auth[key] = false;
+          if(options && options.endOnFailure) res.sendStatus(401);
+          else return next();
         }
       } else {
-        res.sendStatus(401);
+        req.auth[key] = false;
+        if(options && options.endOnFailure) res.sendStatus(401);
+        else return next();
       }
     } catch(err) {
       if(req.session[key]) {
         let _ = await api.getOneByHash(req.session[key].hash);
         if(_) {
+          req.auth[key] = true;
           req.session[key] = _;
           next();
         } else {
-          res.sendStatus(401);
+          req.auth[key] = false;
+          if(options && options.endOnFailure) res.sendStatus(401);
+          else return next();
         }
       } else {
-        res.sendStatus(401);
+        req.auth[key] = false;
+        if(options && options.endOnFailure) res.sendStatus(401);
+        else return next();
       }
     }
   }
 }
 
 module.exports = {
-  checkAccountAuth: getCheckAuthFunction("Account", accountApi),
-  checkCustomerAuth: getCheckAuthFunction("Customer", customerApi),
-  checkEmployeeAuth: getCheckAuthFunction("Employee", employeeApi),
-  checkAdminAuth: getCheckAuthFunction("Admin", adminApi)
+  getCheckAuthFunction,
+  checkAccountAuth:     getCheckAuthFunction("Account", accountApi)   || function(req, res, next) { next(); },
+  checkCustomerAuth:    getCheckAuthFunction("Customer", customerApi) || function(req, res, next) { next(); },
+  checkEmployeeAuth:    getCheckAuthFunction("Employee", employeeApi) || function(req, res, next) { next(); },
+  checkAdminAuth:       getCheckAuthFunction("Admin", adminApi)       || function(req, res, next) { next(); },
 }
