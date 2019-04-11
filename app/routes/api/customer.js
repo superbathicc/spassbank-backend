@@ -26,6 +26,8 @@ async function getOneByUsernameAndPassword(username, password) {
  * @param {Customer.Properties} properties 
  */
 async function create(properties) {
+  delete properties._id;
+  delete properties.hash;
   let customer = new Customer(properties);
   if(!customer.hash) {
     customer.hash = crypto.createHash('sha256').update([
@@ -33,6 +35,7 @@ async function create(properties) {
       customer.password
     ].join('|')).digest('hex');
   }
+  return await customer.save();
 }
 
 async function handlePostLoginCustomer(req, res) {
@@ -59,9 +62,11 @@ async function handlePostLoginCustomer(req, res) {
 }
 
 async function handlePostCustomer(req, res) {
+  console.log(req.body);
+
   if(req.body.username && req.body.password) {
-    let admin = await create(req.body);
-    res.status(201).json(admin);
+    let customer = await create(req.body);
+    res.status(201).json(customer);
   } else {
     res.sendStatus(400);
   }

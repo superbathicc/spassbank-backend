@@ -1,5 +1,6 @@
 const ATM = require('../../models/ATM');
 const crypto = require('crypto');
+const money = require("../../../config/money");
 
 async function getById(id) {
   let q = ATM.findById(id);
@@ -23,14 +24,38 @@ async function create(password, description) {
 }
 
 async function withdraw(atm, amount) {
-
+  if(typeof atm === 'object' && atm instanceof ATM) {
+    if(Object.keys(atm.inventory)
+    .map(key => money[key].value * atm.inventory[key])
+    .reduce((a, b) => a + b, 0) >= amount) {
+      var result = money;
+      Object.keys(money).sort((a,b) => money[b].value - money[a].value)
+      .map(moneyKey => {
+        let v = money[moneyKey].value;
+        if(amount > v) {
+          let needed = Math.trunc(amount / v);
+          if(needed <= atm.inventory[moneyKey]) {
+            atm.inventory[moneyKey] -= needed;
+            amount -= needed * money[moneyKey].value;
+            result[moneyKey] = needed;
+          } else {
+            let took = atm.inventory[moneyKey];
+            atm.inventory[moneyKey] = 0;
+            amount -= money[moneyKey].value * took;
+            result[moneyKey] = took;
+          }
+        }
+      });
+      atm = await atm.save();
+      return result;
+    } else throw new Error("You cannot withdraw more money than stored in the atm")
+  }
 }
 
 async function deposit(atm, items) {
   if(typeof atm == 'object' && atm instanceof ATM) {
-    ["1ct", "2ct", "5ct", "10ct", "20ct", "50ct", "1€", "2€",
-    "5€", "10€", "20€", "50€", "100€", "200€"].forEach(t => {
-      atm.state.contains[t] += items[t];
+    Object.keys(money).forEach(key => {
+      atm.inventory[key] += items[key];
     });
   } else throw new TypeError("atm was not an ATM");
 }
@@ -79,4 +104,6 @@ module.exports = {
 
   create,
   getById,
+  deposit,
+  withdraw
 }

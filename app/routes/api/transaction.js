@@ -3,6 +3,7 @@ const Transaction = require('../../models/Transaction');
 
 async function getById(id) {
   let q = Transaction.findById(id);
+  q.populate("sender").populate("target");
   return await q.exec();
 }
 
@@ -63,6 +64,8 @@ async function handleGetTransactions(req, res) {
       q.skip(Number(req.query.page));
     }
   }
+
+  q.populate("sender").populate("target");
 
   var result = await q.exec();
   res.status(200).json(result);
