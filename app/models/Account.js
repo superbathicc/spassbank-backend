@@ -14,10 +14,12 @@ let accountSchema = new mongoose.Schema({
   },
   balance: {
     type: Number,
-    required: true
+    required: false,
+    default: 0
   },
   hash: {
-    type: String
+    type: String,
+    required: false
   },
   customer: {
     type: mongoose.Types.ObjectId,

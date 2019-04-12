@@ -1,4 +1,5 @@
 const Account = require('../../models/Account');
+const Customer = require('../../models/Customer');
 const crypto = require('crypto')
 const customerApi = require('./customer');
 const atmApi = require('./atm');
@@ -32,7 +33,9 @@ async function getOneByNumber(accountNumber) {
   return await q.exec();
 }
 
-async function create(password, customer) {
+async function create(password, customerHash) {
+  let customer = await customerApi.getByHash(customerHash);
+
   let account = new Account({
     password: crypto.createHash('sha256').update(password).digest('hex'),
     customer: customer._id
@@ -121,13 +124,14 @@ async function handlePostLoginAccount(req, res) {
 }
 
 async function handlePostAccount(req, res) {
-  let customer = await customerApi.getByUsername(req.body.customer);
+  let customer = await customerApi.getByUsername(req.body.customerHash);
   if(customer) {
     try {
       let created = await create(req.body.password, req.body.customerHash);
 
-      res.status(201).json(await created.save())
+      res.status(201).json(await created.save());
     } catch (err) {
+      console.log(err);
       res.sendStatus(500);
     }
   } else {

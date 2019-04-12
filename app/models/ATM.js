@@ -51,42 +51,42 @@ let atmModel = new mongoose.Schema({
       default: 0,
       max: 500
     },
-    "1€": {
+    "1eur": {
       type: Number,
       default: 0,
       max: 500
     },
-    "2€": {
+    "2eur": {
       type: Number,
       default: 0,
       max: 500
     },
-    "5€": {
+    "5eur": {
       type: Number,
       default: 100,
       max: 250
     },
-    "10€": {
+    "10eur": {
       type: Number,
       default: 100,
       max: 250
     },
-    "20€": {
+    "20eur": {
       type: Number,
       default: 100,
       max: 250
     },
-    "50€": {
+    "50eur": {
       type: Number,
       default: 100,
       max: 250
     },
-    "100€": {
+    "100eur": {
       type: Number,
       default: 100,
       max: 250
     },
-    "200€": {
+    "200eur": {
       type: Number,
       default: 100,
       max: 250

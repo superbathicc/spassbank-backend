@@ -11,11 +11,14 @@ async function getById(id) {
  * @param {Employee.Properties} properties 
  */
 async function create(properties) {
+  delete properties._id;
+  delete properties.hash;  
   let employee = new Employee(properties);
   employee.hash = crypto.createHash('sha256').update([
     employee.username,
     employee.password
-  ].join('|'))
+  ].join('|')).digest('hex');
+  return await employee.save();
 }
 
 async function handleGetEmployee(req, res) {

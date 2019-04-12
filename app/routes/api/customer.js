@@ -21,6 +21,13 @@ async function getOneByUsernameAndPassword(username, password) {
   return await q.exec();
 }
 
+async function getByHash(hash) {
+  let q = Customer.findOne({
+    hash: hash
+  });
+  return await q.exec();
+}
+
 /**
  * crates a new Customer
  * @param {Customer.Properties} properties 
@@ -65,6 +72,9 @@ async function handlePostCustomer(req, res) {
   console.log(req.body);
 
   if(req.body.username && req.body.password) {
+    req.body.password = crypto.createHash('sha256')
+    .update(req.body.password)
+    .digest('hex');
     let customer = await create(req.body);
     res.status(201).json(customer);
   } else {
@@ -96,5 +106,6 @@ module.exports = {
 
   create,
   getById,
-  getByUsername
+  getByUsername,
+  getByHash
 }

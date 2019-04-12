@@ -13,14 +13,12 @@ async function create(password, description) {
     description
   });
 
-  let created = await atm.save();
+  atm.hash = crypto.createHash('sha256').update([
+    atm._id,
+    atm.password
+  ].join('|')).digest('hex');
 
-  created.hash = crypto.createHash('sha256').update([
-    created._id,
-    created.password
-  ].join('|'));
-
-  return await created.save();
+  return await atm.save();
 }
 
 async function withdraw(atm, amount) {
@@ -30,7 +28,7 @@ async function withdraw(atm, amount) {
     .reduce((a, b) => a + b, 0) >= amount) {
       var result = money;
       Object.keys(money).sort((a,b) => money[b].value - money[a].value)
-      .map(moneyKey => {
+      .forEach(moneyKey => {
         let v = money[moneyKey].value;
         if(amount > v) {
           let needed = Math.trunc(amount / v);

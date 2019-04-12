@@ -34,11 +34,11 @@ let customerSchema = new mongoose.Schema({
   name: {
     first: {
       type: String,
-      required: true
+      required: false
     },
     last: {
       type: String,
-      required: true
+      required: false
     }
   },
   dateOfBirth: {
