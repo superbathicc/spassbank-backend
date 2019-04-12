@@ -4,6 +4,13 @@
   {{/inline}}
   
   {{#*inline "content"}}
-  {{text req "welcome"}}
+  <section>
+    <article>
+      <h1>{{text req "welcome"}}</h1>
+      <div>
+        <a class="button-link" href="login.hbs">{{text req "login"}}</a>
+      </div>
+    </article>
+  </section>
   {{/inline}}
 {{/layouts/main}}
