@@ -154,31 +154,29 @@ async function handlePostAccountTransaction(req, res) {
 }
 
 async function handlePostAccountWithdraw(req, res) {
-  if(typeof req.session["Account"] == 'object' && req.session["Account"] instanceof Account) {
-    if(req.body.amount && Number(req.body.amount)) {
-      if(req.body.atmId) {
-        try {
-          res.status(200).json(await withdraw(req.session["Account"], Number(req.body.amount), req.body.atmId));
-        } catch (err) {
-          console.log(err);
-          res.sendStatus(500);
-        }
-      } else res.sendStatus(400);
+  let account = await getOneByHash(req.body.accountHash);
+  if(req.body.amount && Number(req.body.amount)) {
+    if(req.body.atmId) {
+      try {
+        res.status(200).json(await withdraw(account, Number(req.body.amount), req.body.atmId));
+      } catch (err) {
+        console.log(err);
+        res.sendStatus(500);
+      }
     } else res.sendStatus(400);
-  } else res.sendStatus(500);
+  } else res.sendStatus(400);
 }
 
 async function handlePostAccountDeposit(req, res) {
-  if(typeof req.session["Account"] == 'object' && req.session["Account"] instanceof Account) {
-    if(typeof req.body.items == 'object') {
-      if(req.body.atmId) {
-        try {
-          res.status(200).json(await deposit(req.session["Account"], req.body.items, req.body.atmId));
-        } catch (err) {
-          console.log(err);
-          res.sendStatus(500);
-        }
-      } else res.sendStatus(400);
+  let account = await getOneByHash(req.body.accountHash)
+  if(typeof req.body.items == 'object') {
+    if(req.body.atmId) {
+      try {
+        res.status(200).json(await deposit(account, req.body.items, req.body.atmId));
+      } catch (err) {
+        console.log(err);
+        res.sendStatus(500);
+      }
     } else res.sendStatus(400);
   } else res.sendStatus(400);
 }
