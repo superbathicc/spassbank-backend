@@ -1,0 +1,19 @@
+{{#> 'layouts/main'}}
+  {{#*inline "title"}}
+  ATM List
+  {{/inline}}
+  
+  {{#*inline "content"}}
+  <article>
+    <section>
+      <h1>List of ATMs</h1>
+      <table class="model-list" model="atm">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </article>
+
+  <script src="/src/model-list.js"></script>
+  {{/inline}}
+{{/layouts/main}}

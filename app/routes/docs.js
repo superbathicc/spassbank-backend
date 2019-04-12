@@ -10,6 +10,13 @@ module.exports = function(app) {
     });
   });
 
+  app.get('/jquery', (req, res) => {
+    var p = path.join(__dirname, '../../node_modules/jquery/dist/jquery.min.js');
+    if(fs.existsSync(p)) {
+      res.set("Content-Type", "text/javascript").status(200).send(fs.readFileSync(p).toString("utf8"));
+    } else res.sendStatus(404);
+  })
+
   app.get('/src/*', (req, res) => {
     var rel = path.relative('/src/', req.path);
     var p = path.join(__dirname, '../../src', rel);

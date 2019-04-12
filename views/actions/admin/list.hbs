@@ -1,0 +1,21 @@
+{{#> 'layouts/main'}}
+  {{#*inline "title"}}
+  Admin List
+  {{/inline}}
+  
+  {{#*inline "content"}}
+  <article>
+    <section>
+      <h1>List of Admins</h1>
+      <table class="model-list" model="admin">
+        <thead>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </section>
+  </article>
+
+  <script src="/src/model-list.js"></script>
+  {{/inline}}
+{{/layouts/main}}

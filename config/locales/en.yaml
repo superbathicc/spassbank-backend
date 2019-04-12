@@ -5,7 +5,10 @@ welcome: Welcome to the Spassbank.
 login: Login
 label_username: Username
 label_password: Password
+label_description: Description
 login_submit: Login
+
+submit_create: Create
 
 settings: Settings
 
@@ -23,3 +26,6 @@ submit: Submit
 amount_to_refill: How much money do you want to refill?
 
 current: Current
+
+admin: System Administrator
+employee: Spassbank Employee

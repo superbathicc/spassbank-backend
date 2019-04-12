@@ -4,7 +4,10 @@ welcome: Herzlich Willkommen bei der Spaßbank.
 login: Anmeldung
 label_username: Benutzername
 label_password: Passwort
+label_description: Beschreibung
 login_submit: Einloggen
+
+submit_create: Erstellen
 
 settings: Einstellungen
 
@@ -22,3 +25,6 @@ submit: Senden
 current: Aktuell
 
 amount_to_refill: Wie viel Geld wollen Sie nachfüllen?
+
+admin: Systemverwalter
+employee: Angestellte(r) der Spaßbank

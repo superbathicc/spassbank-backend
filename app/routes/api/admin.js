@@ -50,6 +50,16 @@ async function handleGetAdmin(req, res) {
   }
 }
 
+async function handleGetAdmins(req, res) {
+  let q = Admin.find();
+  
+  if(req.query.username) {
+    q.where('username').regex(new RegExp(req.query.username));
+  }
+
+  res.status(200).json(await q.exec());
+}
+
 async function handlePostAdmin(req, res) {
   if(req.body.username && req.body.password) {
     let admin = await create(req.body.username, req.body.password);
@@ -85,6 +95,7 @@ function router(app) {
   let auth = require('../../lib/auth');
 
   app.get('/api/admin/:adminId', auth.checkAdminAuth, handleGetAdmin);
+  app.get('/api/admin', auth.checkAdminAuth, handleGetAdmins);
   app.post('/api/admin', auth.checkAdminAuth, handlePostAdmin);
   app.post('/api/login/admin', handlePostLoginAdmin);
 }

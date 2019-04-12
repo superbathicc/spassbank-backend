@@ -1,0 +1,36 @@
+{{#> 'layouts/main'}}
+  {{#*inline "title"}}
+  Create Employee
+  {{/inline}}
+  
+  {{#*inline "content"}}
+  <section>
+    <article>
+      <h2>Create Employee</h2>
+
+      <script>
+        function handlesuccess(data) {
+          alert("created:\n\n" + JSON.stringify(data, null, '  '));
+        }
+        function handlefail(err) {
+          alert("failed:\n\n" + err);
+        }
+      </script>
+
+      <form action="/api/employee" method="POST" class="ajax-post" onsuccess="handlesuccess" onfail="handlefail">
+        <label for="username">{{text req "label_username"}}</label>
+        <input type="text" name="username" /><br />
+        <label for="password">{{text req "label_password"}}</label>
+        <input type="password" name="password" /><br />
+        <label for="name.first">{{text req "label_name_first"}}</label>
+        <input type="text" name="name.first" /><br />
+        <label for="name.last">{{text req "label_name_last"}}</label>
+        <input type="text" name="name.last" /><br />
+        <button type="submit">{{text req "submit_create"}}</button>
+      </form>
+    </article>
+  </section>
+
+  <script src="/src/ajax-post.js"></script>
+  {{/inline}}
+{{/layouts/main}}

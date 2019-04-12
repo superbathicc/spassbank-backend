@@ -1,6 +1,6 @@
   @font-face{
     font-family:Lato;
-    src:url('Lato.woff');
+    src:url('/src/Lato.woff');
   } 
 
   html{
@@ -171,4 +171,41 @@
   a.button-link:visited{
     text-decoration: none;
     color:white;
+  }
+
+  ul.collection {
+    display: block;
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border: solid 1px #ccc;
+    border-radius: 4px;
+  }
+
+  ul.collection li {
+    display: block;
+    max-width: 100%;
+    margin: 2px 0px;
+    border-bottom: solid 1px #ccc;
+  }
+
+  ul.collection li a {
+    display: block;
+    padding: .5em 1em;
+    max-width: 100%;
+    max-height: 100%;
+    text-decoration: none;
+  }
+  
+  a[href] {
+    color: rgb(0, 192, 160);
+  }
+
+  a[href]:visited {
+    background-color: rgb(0, 160, 128);
+  }
+
+  ul.collection li:last-child {
+    border-bottom: none;
   }

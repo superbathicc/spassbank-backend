@@ -73,8 +73,8 @@ function getCheckAuthFunction(key, api, options) {
 
 module.exports = {
   getCheckAuthFunction,
-  checkAccountAuth:     getCheckAuthFunction("Account", accountApi)   || function(req, res, next) { next(); },
-  checkCustomerAuth:    getCheckAuthFunction("Customer", customerApi) || function(req, res, next) { next(); },
-  checkEmployeeAuth:    getCheckAuthFunction("Employee", employeeApi) || function(req, res, next) { next(); },
-  checkAdminAuth:       getCheckAuthFunction("Admin", adminApi)       || function(req, res, next) { next(); },
+  checkAccountAuth:     getCheckAuthFunction("Account", accountApi, {endOnFailure: true})   || function(req, res, next) { next(); },
+  checkCustomerAuth:    getCheckAuthFunction("Customer", customerApi, {endOnFailure: true}) || function(req, res, next) { next(); },
+  checkEmployeeAuth:    getCheckAuthFunction("Employee", employeeApi, {endOnFailure: true}) || function(req, res, next) { next(); },
+  checkAdminAuth:       getCheckAuthFunction("Admin", adminApi, {endOnFailure: true})       || function(req, res, next) { next(); },
 }

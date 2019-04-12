@@ -10,7 +10,7 @@ async function getById(id) {
 async function create(password, description) {
   let atm = new ATM({
     password: crypto.createHash('sha256').update(password).digest('hex'),
-    description
+    description: description
   });
 
   atm.hash = crypto.createHash('sha256').update([
@@ -88,9 +88,11 @@ async function handlePostATM(req, res) {
 }
 
 function router(app) {
+  let auth = require('../../lib/auth');
+
   app.get('/api/atm/:atmId', handleGetATM);
   app.get('/api/atm', handleGetATMs);
-  app.post('/api/atm', handlePostATM);
+  app.post('/api/atm', auth.checkAdminAuth, handlePostATM);
 }
 
 module.exports = {

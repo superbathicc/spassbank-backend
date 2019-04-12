@@ -1,21 +1,21 @@
 {{#> 'layouts/main'}}
   {{#*inline "title"}}
-  Create Admin
+  Create ATM
   {{/inline}}
   
   {{#*inline "content"}}
-  <section>
-    <article>
-      <h2>Create Admin</h2>
+  <article>
+    <section>
+      <h2>Create ATM</h2>
 
-      <form action="/api/admin" method="POST">
-        <label for="username">{{text req "label_username"}}</label>
-        <input type="text" name="username" /><br />
+      <form action="/api/atm" method="POST">
         <label for="password">{{text req "label_password"}}</label>
         <input type="password" name="password" /><br />
+        <label for="description">{{text req "label_description"}}</label>
+        <textarea type="text" name="description" /></textarea><br />
         <button type="submit">{{text req "submit_create"}}</button>
       </form>
-    </article>
-  </section>
+    </section>
+  </article>
   {{/inline}}
 {{/layouts/main}}
