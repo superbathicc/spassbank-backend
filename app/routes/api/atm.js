@@ -30,7 +30,7 @@ async function create(password, description) {
 
 async function withdraw(atm, amount) {
   if(typeof atm === 'object' && atm instanceof ATM) {
-    if(Object.keys(atm.inventory)
+    if(Object.keys(money)
     .map(key => money[key].value * atm.inventory[key])
     .reduce((a, b) => a + b, 0) >= amount) {
       var result = money;
@@ -62,6 +62,7 @@ async function deposit(atm, items) {
     Object.keys(money).forEach(key => {
       atm.inventory[key] += items[key];
     });
+	return Object.keys(items).map(key => money[key].value * items[key]).reduce((a, b) => Number(a) + Number(b), 0);
   } else throw new TypeError("atm was not an ATM");
 }
 
