@@ -113,9 +113,10 @@ async function handlePostLoginAccount(req, res) {
       );
       if(account) {
         req.session["Account"] = account;
-        req.status(200).json(account);
-      }
+        res.status(200).json(account);
+      } else res.sendStatus(401)
     } catch(err) {
+	  console.log(err);
       res.sendStatus(500);
     }
   } else {
@@ -179,7 +180,7 @@ async function handlePostAccountDeposit(req, res) {
         }
       } else res.sendStatus(400);
     } else res.sendStatus(400);
-  } else res.sendStatus(500);
+  } else res.sendStatus(400);
 }
 
 async function handleGetAccounts(req, res) {

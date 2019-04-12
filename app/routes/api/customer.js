@@ -15,8 +15,8 @@ async function getByUsername(username) {
 
 async function getOneByUsernameAndPassword(username, password) {
   let q = Customer.findOne({
-    username,
-    password
+    username: username,
+    password: password
   });
   return await q.exec();
 }

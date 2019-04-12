@@ -113,6 +113,11 @@ app.use(function(req, res, next) {
 
 app.use(session(sess));
 
+app.use((req, res, next) => {
+	console.log("session:", req.session);
+	next();
+});
+
 router(app);
 
 app.listen(cfg.port, () => {
