@@ -198,11 +198,11 @@
     text-decoration: none;
   }
   
-  a[href] {
+  a[href]:not(.button-link) {
     color: rgb(0, 192, 160);
   }
 
-  a[href]:visited {
+  a[href]:not(.button-link):visited {
     background-color: rgb(0, 160, 128);
   }
 

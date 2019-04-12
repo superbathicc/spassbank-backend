@@ -182,8 +182,25 @@ async function handlePostAccountDeposit(req, res) {
   } else res.sendStatus(500);
 }
 
+async function handleGetAccounts(req, res) {
+  var q = Account.find();
+
+  if(req.session["Admin"] || req.session["Employee"]) {
+    if(req.query.customer) {
+      q.where("customer").equals(mongoose.Types.ObjectId(req.query.customer));
+    }
+  }
+
+  if(req.session["Customer"]) {
+    q.where("customer").equals(req.session["Customer"]._id);
+  }
+
+  res.status(200).json(await q.exec());
+}
+
 function router(app) {
   app.get('/api/account/:accountId', handleGetAccount);
+  app.get('/api/account', handleGetAccounts);
   app.post('/api/login/account', handlePostLoginAccount);
   app.post('/api/account', handlePostAccount);
   app.post('/api/account/transaction', handlePostAccountTransaction);

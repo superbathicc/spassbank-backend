@@ -7,6 +7,13 @@ async function getById(id) {
   return await q.exec();
 }
 
+async function getByHash(hash) {
+  let q = ATM.findOne({
+    hash: hash
+  });
+  return await q.exec();
+}
+
 async function create(password, description) {
   let atm = new ATM({
     password: crypto.createHash('sha256').update(password).digest('hex'),
@@ -87,12 +94,35 @@ async function handlePostATM(req, res) {
   }
 }
 
+async function handlePostLoginATM(req, res) {
+  if(!req.body) res.sendStatus(400);
+  if(req.body.id && req.body.password) {
+    try {
+      let atm = await getByHash(crypto.createHash().update([
+        req.body.id,
+        crypto.createHash('sha256').update(req.body.password).digest('hex')
+      ].join('|')).digest('hex'));
+      if(admin) {
+        req.session["ATM"] = atm;
+        res.status(200).json(atm);
+      } else {
+        res.sendStatus(401);
+      }
+    } catch(err) {
+      res.sendStatus(500);
+    }
+  } else {
+    res.sendStatus(400);
+  }
+}
+
 function router(app) {
   let auth = require('../../lib/auth');
 
   app.get('/api/atm/:atmId', handleGetATM);
   app.get('/api/atm', handleGetATMs);
   app.post('/api/atm', auth.checkAdminAuth, handlePostATM);
+  app.post('/api/login/atm', handlePostLoginATM);
 }
 
 module.exports = {
