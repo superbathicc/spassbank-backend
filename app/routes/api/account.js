@@ -58,10 +58,13 @@ async function create(password, customer) {
   return await created.save();
 }
 
-async function deposit(account, items, atmId) {
-  if(typeof account == 'object' && account instanceof Account) {
-    account.balance += await atmApi.deposit(await atmApi.getById(atmId), items);
-    return await account.save();
+async function deposit(account, items, atmId, fuckThis) {
+  if(typeof account == 'object' && account instanceof Account || fuckThis) {
+    let deposited =  await atmApi.deposit(await atmApi.getById(atmId), items);
+    if(!fuckThis) {
+      account.balance += deposited;
+      return await account.save();
+    } else { return null; }
   } else {
     throw new TypeError('account was not an Account');
   }
@@ -190,7 +193,7 @@ async function handlePostAccountDeposit(req, res) {
   if(typeof req.body.items == 'object') {
     if(req.body.atmId) {
       try {
-        res.status(200).json(await deposit(account, req.body.items, req.body.atmId));
+        res.status(200).json(await deposit(account, req.body.items, req.body.atmId, typeof req.session['Employee'] == 'object'));
       } catch (err) {
         console.log(err);
         res.sendStatus(500);
