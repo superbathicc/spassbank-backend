@@ -6,12 +6,12 @@
   html{
     margin:0;
     font-family: Lato;
+    font-variant-ligatures: none;
   }
   body{
     margin:0;
   }
   section{
-    height:100vh;
     display:flex;
     justify-content: center;
     align-items: center;
@@ -24,12 +24,7 @@
 
   article{  
     min-width:256px;
-    z-index:10;
-    background-color:white;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    flex-flow: column;
+    margin-top:50px;
   }
 
   h1.main{
@@ -42,6 +37,22 @@
     margin-top:0.2em;
     margin-bottom:0;
     z-index:-1;
+    user-select:none;
+  }
+
+  textarea[type="text"]{
+    border-radius: 5px;
+    border: 2px solid rgb(0, 192, 160);
+    padding: 5px;
+    outline: none !important;
+    margin-top: 0.1em;
+    margin-bottom: 0.3em;
+    width: 100%;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+    resize:none;
+    font-family:Lato;
   }
 
   input[type="text"]{
@@ -82,6 +93,7 @@
     outline:none !important;
     transition:background-color 0.2s ease-in-out 0s, border-color 0.3s ease-in-out 0s;
     border:2px solid rgb(0, 192, 160);
+    margin-bottom: 0.5em;
   }
 
   button[type="submit"]:hover{
@@ -92,19 +104,14 @@
   label{
     font-size:0.9em;
     margin-left:0.5em;
-  }
-
-  svg{
-    display:flex;
-    justify-content: center;
-    align-items: center;
+    user-select: none;
   }
 
   h1{
     text-align: center;
     margin-bottom:0.3em;
+    user-select: none;
   }
-
   div.icons{
     display:flex;
     flex-flow: row;
@@ -112,30 +119,36 @@
     align-items: center;
   }
 
-  div.icon{
+  a.icon{
     text-align: center;
-    margin:1em;
+    text-decoration: none;
+    color:black !important;
+    margin:0.5em;
     padding:10px;
     cursor:pointer;
     border:2px solid rgb(0, 192, 160); 
     border-radius: 5px;
     transition:transform 0.3s cubic-bezier(0.680, -0.550, 0.265, 1.550) 0s, box-shadow 0.3s cubic-bezier(0.680, -0.550, 0.265, 1.550) 0s;
   }
-
-  div.icon:hover{
+  a.icon:hover{
     transform:scale(1.1);
     -webkit-box-shadow: 0px 0px 10px 3px rgba(170,170,170,1);
     -moz-box-shadow: 0px 0px 10px 3px rgba(170,170,170,1);
     box-shadow: 0px 0px 10px 3px rgba(170,170,170,1);
   }
 
-  div.icon:hover #settings-icon {
+  a.icon:hover #settings-icon {
     animation: rotate 3s linear infinite;
   }
-  div.icon:hover #refill-icon {
+
+  a.icon:hover #refill-icon {
     animation: pulse 1s ease-in infinite;
   }
 
+  hr{
+    border: 2px solid rgb(0, 192, 160); 
+    border-radius: 5px;
+  }
   @keyframes pulse{
     0% {transform:translateY(0px)}
     25% {transform:translateY(-20px)}
@@ -162,6 +175,7 @@
     text-decoration:none;
     padding:5px;
     text-align:center;
+    margin-top:0.5em;
   }
 
   a.button-link:hover{
@@ -180,7 +194,7 @@
     margin: 0;
     padding: 0;
     border: solid 1px #ccc;
-    border-radius: 4px;
+    border-radius: 5px;
   }
 
   ul.collection li {

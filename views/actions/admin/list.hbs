@@ -1,20 +1,20 @@
 {{#> 'layouts/main'}}
   {{#*inline "title"}}
-  Admin List
+  {{text req "admin_list"}}
   {{/inline}}
   
   {{#*inline "content"}}
-  <article>
-    <section>
-      <h1>List of Admins</h1>
+  <section>
+    	<article>
+      <h1>{{text req "admin_list"}}</h1>
       <table class="model-list" model="admin">
         <thead>
         </thead>
         <tbody>
         </tbody>
       </table>
-    </section>
-  </article>
+    </article>
+  </section>
 
   <script src="/src/model-list.js"></script>
   {{/inline}}

@@ -1,17 +1,21 @@
 {{#> 'layouts/main'}}
   {{#*inline "title"}}
-  Admin Actions
+  {{text req "admin_actions"}}
   {{/inline}}
   
   {{#*inline "content"}}
-  <article>
-    <section>
-      <h2>Index of Admin actions</h2>
+  <section>
+    <article>
+      <h1>{{text req "admin_actions"}}</h1>
       <ul class="collection">
-        <li><a href="./admin/create">Create Admin</a></li>
-        <li><a href="./admin/list">List Admins</a></li>
+        <li><a href="./admin/create">{{text req "create_admin"}}</a></li>
+        <li><a href="./admin/list">{{text req "admin_list"}}</a></li>
+        <li><a href="./atm/create">{{text req "create_atm"}}</a></li>
+        <li><a href="./atm/list">{{text req "atm_list"}}</a></li>
+        <li><a href="./employee/create">{{text req "create_employee"}}</a></li>
+        <li><a href="./employee/list">{{text req "employee_list"}}</a></li>
       </ul>
+      </article>
     </section>
-  </article>
   {{/inline}}
 {{/layouts/main}}

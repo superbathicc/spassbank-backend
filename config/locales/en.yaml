@@ -12,7 +12,6 @@ submit_create: Create
 settings: Settings
 
 status: Status
-check_status: Check status
 refill: Refill money
 
 money_supply: Money supply
@@ -30,3 +29,21 @@ admin: System Administrator
 employee: Spassbank Employee
 customer: Spassbank Customer
 account: Spassbank Account
+
+create_admin: Create Admin
+admin_list: List of Admins
+create_employee: Create Employee
+employee_list: List of Employees
+
+create_atm: Create ATM
+check_status: Check status
+atm_list: List of ATMs
+check: Check
+
+label_firstname: First Name
+label_lastname: Last Name
+
+employee_actions: Employee Actions
+admin_actions: Admin Actions
+
+homepage: Homepage

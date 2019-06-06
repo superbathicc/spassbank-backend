@@ -1,18 +1,18 @@
 {{#> 'layouts/main'}}
   {{#*inline "title"}}
-  Employee List
+  {{text req "employee_list"}}
   {{/inline}}
   
   {{#*inline "content"}}
-  <article>
-    <section>
-      <h1>List of Employees</h1>
+  <section>
+    <article>
+      <h1>{{text req "employee_list"}}</h1>
       <table class="model-list" model="employee">
         <thead></thead>
         <tbody></tbody>
       </table>
-    </section>
-  </article>
+    </article>
+  </section>
 
   <script src="/src/model-list.js"></script>
   {{/inline}}

@@ -1,18 +1,18 @@
 {{#> 'layouts/main'}}
   {{#*inline "title"}}
-  ATM List
+  {{text req "atm_list"}}
   {{/inline}}
 
   {{#*inline "content"}}
-  <article>
-    <section>
-      <h1>List of ATMs</h1>
+  <section>
+    <article>
+      <h1>{{text req "atm_list"}}</h1>
       <table class="model-list" model="atm">
         <thead></thead>
         <tbody></tbody>
       </table>
-    </section>
-  </article>
+    </article>
+  </section>
 
   <script src="/src/model-list.js"></script>
   {{/inline}}

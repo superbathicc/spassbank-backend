@@ -3,7 +3,6 @@
 
   document.addEventListener('DOMContentLoaded', function() {
     $('form.ajax-post[action]').each(function() {
-      console.log(this);
       this.addEventListener('submit', function(event) {
         event.preventDefault();
 

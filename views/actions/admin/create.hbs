@@ -1,14 +1,23 @@
 {{#> 'layouts/main'}}
   {{#*inline "title"}}
-  Create Admin
+  {{text req "create_admin"}}
   {{/inline}}
   
   {{#*inline "content"}}
   <section>
     <article>
-      <h2>Create Admin</h2>
+      <h1>{{text req "create_admin"}}</h1>
 
-      <form action="/api/admin" method="POST">
+      <script>
+        function handlesuccess(data) {
+          alert("created:\n\n" + JSON.stringify(data, null, '  '));
+        }
+        function handlefail(err) {
+          alert("failed:\n\n" + err);
+        }
+      </script>
+
+      <form action="/api/admin" method="POST" class="ajax-post" onsuccess="handlesuccess" onfail="handlefail">
         <label for="username">{{text req "label_username"}}</label>
         <input type="text" name="username" /><br />
         <label for="password">{{text req "label_password"}}</label>
@@ -17,5 +26,7 @@
       </form>
     </article>
   </section>
+  <script src="/src/ajax-post.js"></script>
+  
   {{/inline}}
 {{/layouts/main}}

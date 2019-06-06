@@ -1,0 +1,32 @@
+{{#> 'layouts/main'}}
+  {{#*inline "title"}}
+  {{text req "check_status"}}
+  {{/inline}}
+  
+  {{#*inline "content"}}
+  <section>
+    <article>
+      <h1>{{text req "check_status"}}</h1>
+
+      <script>
+        function handlesuccess(data) {
+          alert("status:\n\n" + JSON.stringify(data, null, '  '));
+        }
+        function handlefail(err) {
+          alert("failed:\n\n" + err);
+        }
+      </script>
+
+      <form action="/api/atm" method="POST" class="ajax-post" onsuccess="handlesuccess" onfail="handlefail">
+        <label for="atmId">ID</label>
+        <input type="text" name="atmId" /><br />
+        <label for="password">{{text req "label_password"}}</label>
+        <input type="password" name="password" /><br />
+        <button type="submit">{{text req "check"}}</button>
+      </form>
+    </article>
+  </section>
+  
+  <script src="/src/ajax-post.js"></script>
+    {{/inline}}
+{{/layouts/main}}

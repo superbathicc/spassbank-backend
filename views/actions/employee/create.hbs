@@ -1,12 +1,12 @@
 {{#> 'layouts/main'}}
   {{#*inline "title"}}
-  Create Employee
+  {{text req "create_employee"}}
   {{/inline}}
   
   {{#*inline "content"}}
   <section>
     <article>
-      <h2>Create Employee</h2>
+      <h1>{{text req "create_employee"}}</h1>
 
       <script>
         function handlesuccess(data) {
@@ -22,9 +22,9 @@
         <input type="text" name="username" /><br />
         <label for="password">{{text req "label_password"}}</label>
         <input type="password" name="password" /><br />
-        <label for="name.first">{{text req "label_name_first"}}</label>
+        <label for="name.first">{{text req "label_firstname"}}</label>
         <input type="text" name="name.first" /><br />
-        <label for="name.last">{{text req "label_name_last"}}</label>
+        <label for="name.last">{{text req "label_lastname"}}</label>
         <input type="text" name="name.last" /><br />
         <button type="submit">{{text req "submit_create"}}</button>
       </form>

@@ -1,21 +1,31 @@
 {{#> 'layouts/main'}}
   {{#*inline "title"}}
-  Create ATM
+  {{text req "create_atm"}}
   {{/inline}}
   
   {{#*inline "content"}}
-  <article>
-    <section>
-      <h2>Create ATM</h2>
+  <section>
+    <article>
+      <h1>{{text req "create_atm"}}</h1>
 
-      <form action="/api/atm" method="POST">
+      <script>
+        function handlesuccess(data) {
+          alert("created:\n\n" + JSON.stringify(data, null, '  '));
+        }
+        function handlefail(err) {
+          alert("failed:\n\n" + err);
+        }
+      </script>
+
+      <form action="/api/atm" method="POST" class="ajax-post" onsuccess="handlesuccess" onfail="handlefail">
         <label for="password">{{text req "label_password"}}</label>
         <input type="password" name="password" /><br />
         <label for="description">{{text req "label_description"}}</label>
-        <textarea type="text" name="description" /></textarea><br />
+        <textarea rows="5" type="text" name="description" /></textarea><br />
         <button type="submit">{{text req "submit_create"}}</button>
       </form>
-    </section>
-  </article>
+    </article>
+  </section>
+  <script src="/src/ajax-post.js"></script>
   {{/inline}}
 {{/layouts/main}}

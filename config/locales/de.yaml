@@ -12,7 +12,6 @@ submit_create: Erstellen
 settings: Einstellungen
 
 status: Status
-check_status: Status prüfen
 refill: Geld nachfüllen
 
 money_supply: Geldstand
@@ -27,6 +26,24 @@ amount_to_refill: Wie viel Geld wollen Sie nachfüllen?
 current: Aktuell
 
 admin: Systemverwalter
-employee: Angestellte(r) der Spaßbank
+employee: Angestellte(r)
 customer: Spassbank Kunde
 account: Spassbank Konto
+
+create_admin: Admin erstellen
+admin_list: Liste von Admins
+create_employee: Angestellten erstellen
+employee_list: Liste von Angestellten
+
+create_atm: Geldautomat erstellen
+check_status: Geldautomat prüfen
+atm_list: Liste von Geldautomaten
+check: Prüfen
+
+label_firstname: Vorname
+label_lastname: Nachname
+
+employee_actions: Aktionen für Angestellte
+admin_actions: Aktionen für Admins
+
+homepage: Startseite
