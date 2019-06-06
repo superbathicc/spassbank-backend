@@ -19,16 +19,16 @@
         function makejson() {
         let json="";
         json += "{";
-        let inputs = document.querySelectorAll("input[type=text]");
+        let inputs = document.querySelectorAll("input[type=number]");
         console.log(inputs);
         for(input of inputs) {
-          if((input.name != "atmId") && (input.name != "values") && (input.value != "")){
+          if(input.value != ""){
             json += input.name + ":" + input.value + ",";
           }
         }
         json = json.replace(/,$/,"");
         json += "}";
-        console.log(json);
+        document.querySelector("input[name=values]").value = json;
       }
 
       </script>
@@ -38,33 +38,33 @@
         <input type="text" name="atmId" /><br />
         <hr>
         <label for="1ct">1 Cent</label>
-        <input type="text" name="1ct" /><br />
+        <input type="number" name="1ct" /><br />
         <label for="2ct">2 Cent</label>
-        <input type="text" name="2ct" /><br />
+        <input type="number" name="2ct" /><br />
         <label for="5ct">5 Cent</label>
-        <input type="text" name="5ct" /><br />  
+        <input type="number" name="5ct" /><br />  
         <label for="10ct">10 Cent</label>
-        <input type="text" name="10ct" /><br />
+        <input type="number" name="10ct" /><br />
         <label for="20ct">20 Cent</label>
-        <input type="text" name="20ct" /><br />
+        <input type="number" name="20ct" /><br />
         <label for="50ct">50 Cent</label>
-        <input type="text" name="50ct" /><br />
+        <input type="number" name="50ct" /><br />
         <label for="1eur">1 Euro</label>
-        <input type="text" name="1eur" /><br />
+        <input type="number" name="1eur" /><br />
         <label for="2eur">2 Euro</label>
-        <input type="text" name="2eur" /><br />
+        <input type="number" name="2eur" /><br />
         <label for="5eur">5 Euro</label>
-        <input type="text" name="5eur" /><br />
+        <input type="number" name="5eur" /><br />
         <label for="10eur">10 Euro</label>
-        <input type="text" name="10eur" /><br />
+        <input type="number" name="10eur" /><br />
         <label for="20eur">20 Euro</label>
-        <input type="text" name="20eur" /><br />
+        <input type="number" name="20eur" /><br />
         <label for="50eur">50 Euro</label>
-        <input type="text" name="50eur" /><br />
+        <input type="number" name="50eur" /><br />
         <label for="100eur">100 Euro</label>
-        <input type="text" name="100eur" /><br />
+        <input type="number" name="100eur" /><br />
         <label for="200eur">200 Euro</label>
-        <input type="text" name="200eur" /><br />
+        <input type="number" name="200eur" /><br />
         <input style="display: none" type="text" name="values">
         <button type="submit">{{text req "refill"}}</button>
       </form>
