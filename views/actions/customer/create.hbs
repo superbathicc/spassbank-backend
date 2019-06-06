@@ -1,12 +1,12 @@
 {{#> 'layouts/main'}}
 {{#*inline "title"}}
-Create Customer
+{{text req "create_customer"}}
 {{/inline}}
 
 {{#*inline "content"}}
 <section>
   <article>
-    <h2>Create Customer</h2>
+    <h1>{{text req "create_customer"}}</h1>
 
     <script>
       function handlesuccess(data) {
@@ -65,12 +65,12 @@ Create Customer
       <input type="text" name="username" /><br />
       <label for="password">{{text req "label_password"}}</label>
       <input type="password" name="password" /><br />
-      <label for="name.first">First Name</label>
-      <input type="text" name="name.first">
-      <label for="name.last">Last Name</label>
-      <input type="text" name="name.last">
-      <label for="dateOfBirth">Date of Birth</label>
-      <label for="month">Month</label>
+      <label for="name.first">{{text req "label_firstname"}}</label>
+      <input type="text" name="name.first"> <br />
+      <label for="name.last">{{text req "label_lastname"}}</label>
+      <input type="text" name="name.last"> <br />
+      <label for="dateOfBirth">{{text req "birthdate"}}</label><br />
+      <label for="month">{{text req "month"}}</label> 
       <select name="month" id="month">
         <option value="1">January</option>
         <option value="2">February</option>
@@ -84,11 +84,11 @@ Create Customer
         <option value="10">October</option>
         <option value="11">November</option>
         <option value="11">December</option>
-      </select>
-      <label for="day">Day</label>
+      </select> 
+      <label for="day">{{text req "day"}}</label>
       <input type="number" min="1" max="31" name="day">
-      <label for="year">Year</label>
-      <input type="number" min="1970" name="year">
+      <label for="year">{{text req "year"}}</label>
+      <input type="number" min="1920" name="year"><br />
       <input style="display: none" type="number" name="dateOfBirth">
 
       <button type="submit">{{text req "submit_create"}}</button>

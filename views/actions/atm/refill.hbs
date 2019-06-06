@@ -14,14 +14,28 @@
         }
         function handlefail(err) {
           alert("failed:\n\n" + err);
+        }       
+        
+        function makejson() {
+        let json="";
+        json += "{";
+        let inputs = document.querySelectorAll("input[type=text]");
+        console.log(inputs);
+        for(input of inputs) {
+          if((input.name != "atmId") && (input.name != "values") && (input.value != "")){
+            json += input.name + ":" + input.value + ",";
+          }
         }
+        json = json.replace(/,$/,"");
+        json += "}";
+        console.log(json);
+      }
+
       </script>
 
-      <form action="/api/atm" method="POST" class="ajax-post" onsuccess="handlesuccess" onfail="handlefail">
+      <form action="/api/atm" method="POST" class="ajax-post" onsubmit="return makejson()" onsuccess="handlesuccess" onfail="handlefail">
         <label for="atmId">ID</label>
         <input type="text" name="atmId" /><br />
-        <label for="password">{{text req "label_password"}}</label>
-        <input type="password" name="password" /><br />
         <hr>
         <label for="1ct">1 Cent</label>
         <input type="text" name="1ct" /><br />
@@ -51,6 +65,7 @@
         <input type="text" name="100eur" /><br />
         <label for="200eur">200 Euro</label>
         <input type="text" name="200eur" /><br />
+        <input style="display: none" type="text" name="values">
         <button type="submit">{{text req "refill"}}</button>
       </form>
     </article>
