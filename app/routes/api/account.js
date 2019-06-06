@@ -7,6 +7,7 @@ const atmApi = require('./atm');
 const transactionApi = require('./transaction');
 const money = require('../../../config/money');
 const mongoose = require('mongoose');
+const auth = require('../../lib/auth');
 
 async function getById(id) {
   var q = Account.findById(id);
@@ -35,8 +36,12 @@ async function getOneByNumber(accountNumber) {
   return await q.exec();
 }
 
-async function create(password, customerHash) {
-  let customer = await customerApi.getByHash(customerHash);
+async function create(password, customer) {
+  if(typeof customer == 'object' && customer instanceof customerApi.Customer) {
+    console.log(customer);
+  } else if(typeof customer == 'string') {
+    customer = await customerApi.getByHash(customer) || await customerApi.getById(customer);
+  }
 
   let account = new Account({
     password: crypto.createHash('sha256').update(password).digest('hex'),
@@ -127,12 +132,23 @@ async function handlePostLoginAccount(req, res) {
 }
 
 async function handlePostAccount(req, res) {
-  let customer = await customerApi.getByUsername(req.body.customerHash);
+  console.log(req.body);
+
+  /** @type {customerApi.Customer.Properties} */
+  let customer = await customerApi.getByHash(req.body.customerHash) || await customerApi.getById(req.body.customerId);
+
+  console.log(customer);
   if(customer) {
     try {
-      let created = await create(req.body.password, req.body.customerHash);
+      let created = await create(req.body.password, customer);
 
-      res.status(201).json(await created.save());
+      created.balance = req.body.balance;
+
+      created = await created.save();
+
+      console.log(created);
+
+      res.status(200).json(created);
     } catch (err) {
       console.log(err);
       res.sendStatus(500);
@@ -199,6 +215,22 @@ async function handleGetAccounts(req, res) {
   res.status(200).json(await q.exec());
 }
 
+async function handleGetMyAccounts(req, res) {
+  if(typeof req.session['Customer'] == 'object') {
+    try {
+      let q = Account.find();
+      q.where('customer', req.session['Customer']._id);
+      let accounts = await q.exec();
+      res.status(200).json(accounts);
+    } catch(err) {
+      console.log(err);
+      res.sendStatus(500);
+    }
+  } else {
+    res.sendStatus(401);
+  }
+}
+
 function router(app) {
   app.get('/api/account/:accountId', handleGetAccount);
   app.get('/api/account', handleGetAccounts);
@@ -207,6 +239,7 @@ function router(app) {
   app.post('/api/account/transaction', handlePostAccountTransaction);
   app.post('/api/account/withdraw', handlePostAccountWithdraw);
   app.post('/api/account/deposit', handlePostAccountDeposit);
+  app.get('/api/my-accounts', handleGetMyAccounts);
 }
 
 module.exports = {

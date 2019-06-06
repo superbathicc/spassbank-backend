@@ -1,0 +1,51 @@
+{{#> 'layouts/main'}}
+{{#*inline "title"}}
+Create Admin
+{{/inline}}
+
+{{#*inline "content"}}
+<section>
+  <article>
+    <h2>Create Account</h2>
+
+    <script>
+      function handlesuccess(data) {
+        alert('successfully created:\n' + JSON.stringify(data, null, '  '));
+      }
+
+      function handlefail(data) {
+        alert('creation failed:\n' + JSON.stringify(data, null, '  '));
+      }
+
+      $(document).ready(function() {
+        $.ajax('/api/customers').done(function(data) {
+          if(typeof data == 'object' && data instanceof Array) {
+            data.forEach(function(customer) {
+              $(document.createElement('option'))
+              .attr('value', customer._id)
+              .html(customer.name.first + ' ' + customer.name.last)
+              .appendTo($('#customerId'))
+            });
+          }
+        }).fail(function (data) {
+          alert('could not load customers\n' + JSON.stringify(data, null, '  '));
+        });
+      });
+    </script>
+
+    <form action="/api/account" method="POST" class="ajax-post"
+    onsuccess="handlesuccess" onfail="handlefail">
+      <label for="customerId">Customer</label>
+      <select name="customerId" id="customerId"></select>
+      <label for="password">{{text req "label_password"}}</label>
+      <input type="password" autocomplete="new-password" name="password" /><br />
+      <label for="balance">Balance</label>
+      <input type="number" name="balance">
+      <button type="submit">{{text req "submit_create"}}</button>
+    </form>
+  </article>
+</section>
+
+<script src="/src/ajax-post.js"></script>
+{{/inline}}
+{{/layouts/main}}

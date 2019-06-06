@@ -1,0 +1,64 @@
+{{#> 'layouts/main'}}
+{{#*inline "title"}}
+Select Account
+{{/inline}}
+
+{{#*inline "content"}}
+<section>
+  <article>
+    <h1>Select Account</h1>
+    <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 24 24">
+      <path fill="none" d="M0 0h24v24H0V0z" />
+      <path fill="rgb(0,192,160)"
+        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v1c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-1c0-2.66-5.33-4-8-4z" />
+    </svg>
+
+    <script>
+      $(document).ready(function() {
+        $.ajax('/api/my-accounts').done(function(data) {
+          console.log(data);
+
+          if(typeof data == 'object' && data instanceof Array) {
+            data.forEach(function(account) {
+              let li = $(document.createElement('li'))
+              .appendTo($('#accounts'));
+
+              let form = $(document.createElement('form'))
+              .attr('action', '/api/login/account')
+              .attr('method', 'POST')
+              .appendTo(li);
+
+              let accountId = $(document.createElement('input'))
+              .attr('type', 'text')
+              .attr('name', 'accountId')
+              .attr('value', account.accountId)
+              .prop('disabled', true)
+              .appendTo(form);
+
+              let password = $(document.createElement('input'))
+              .attr('type', 'password')
+              .attr('name', 'password')
+              .appendTo(form);
+
+              let submit = $(document.createElement('button'))
+              .attr('type', 'submit')
+              .text('Login')
+              .appendTo(form);
+            });
+          }
+        }).fail(function(data) {
+          console.log(data);
+        });
+      });
+    </script>
+
+    <ul id="accounts">
+
+    </ul>
+
+  </article>
+</section>
+
+<script src="/src/ajax-post.js"></script>
+{{/inline}}
+{{/layouts/main}}
