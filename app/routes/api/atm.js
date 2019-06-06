@@ -31,7 +31,7 @@ async function create(password, description) {
 async function withdraw(atm, amount) {
   if(typeof atm === 'object' && atm instanceof ATM) {
     if(Object.keys(money)
-      .map(key => money[key].value * (atm.inventory[key] || 0))
+      .map(key => key.startsWith('$') ? 0 : money[key].value * (atm.inventory[key] || 0))
       .reduce((a, b) => a + b, 0) >= amount) {
       var result = money;
       Object.keys(money).sort((a,b) => money[b].value - money[a].value)
