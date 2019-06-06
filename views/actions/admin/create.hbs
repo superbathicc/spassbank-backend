@@ -8,7 +8,19 @@
     <article>
       <h2>Create Admin</h2>
 
-      <form action="/api/admin" method="POST">
+      <script>
+        function handlesuccess() {
+          alert('successfully created:\n' + JSON.stringify(data, null, '  '));
+        }
+
+        function handlefail(data) {
+          alert('creation failed:\n' + JSON.stringify(data, null, '  '));
+        }
+
+      </script>
+
+      <form action="/api/admin" method="POST" class="ajax-post"
+      onsuccess="handlesuccess" onfail="handlefail">
         <label for="username">{{text req "label_username"}}</label>
         <input type="text" name="username" /><br />
         <label for="password">{{text req "label_password"}}</label>
@@ -17,5 +29,7 @@
       </form>
     </article>
   </section>
+
+  <script src="/src/ajax-post.js"></script>
   {{/inline}}
 {{/layouts/main}}

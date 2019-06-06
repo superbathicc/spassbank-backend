@@ -21,77 +21,77 @@ let atmModel = new mongoose.Schema({
     }
   },
   inventory: {
-    "1ct": {
+    '1ct': {
       type: Number,
       default: 0,
       max: 500
     },
-    "2ct": {
+    '2ct': {
       type: Number,
       default: 0,
       max: 500
     },
-    "5ct": {
+    '5ct': {
       type: Number,
       default: 0,
       max: 500
     },
-    "10ct": {
+    '10ct': {
       type: Number,
       default: 0,
       max: 500,
     },
-    "20ct": {
+    '20ct': {
       type: Number,
       default: 0,
       max: 500,
     },
-    "50ct": {
+    '50ct': {
       type: Number,
       default: 0,
       max: 500
     },
-    "1eur": {
+    '1eur': {
       type: Number,
       default: 0,
       max: 500
     },
-    "2eur": {
+    '2eur': {
       type: Number,
       default: 0,
       max: 500
     },
-    "5eur": {
+    '5eur': {
       type: Number,
       default: 100,
       max: 250
     },
-    "10eur": {
+    '10eur': {
       type: Number,
       default: 100,
       max: 250
     },
-    "20eur": {
+    '20eur': {
       type: Number,
       default: 100,
       max: 250
     },
-    "50eur": {
+    '50eur': {
       type: Number,
       default: 100,
       max: 250
     },
-    "100eur": {
+    '100eur': {
       type: Number,
       default: 100,
       max: 250
     },
-    "200eur": {
+    '200eur': {
       type: Number,
       default: 100,
       max: 250
     },
   }
-})
+});
 
-module.exports = mongoose.model("ATM", atmModel);
+module.exports = mongoose.model('ATM', atmModel);

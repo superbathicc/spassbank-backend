@@ -1,5 +1,6 @@
 const Customer = require('../../models/Customer');
 const crypto = require('crypto');
+const auth = require('../../lib/auth');
 
 async function getById(id) {
   let q = Customer.findById(id);
@@ -8,7 +9,7 @@ async function getById(id) {
 
 async function getByUsername(username) {
   let q = Customer.findOne({
-    username
+    username: username
   });
   return q.exec;
 }
@@ -35,6 +36,9 @@ async function getByHash(hash) {
 async function create(properties) {
   delete properties._id;
   delete properties.hash;
+
+  properties.password = crypto.createHash('sha256').update(properties.password).digest('hex');
+
   let customer = new Customer(properties);
   if(!customer.hash) {
     customer.hash = crypto.createHash('sha256').update([
@@ -93,8 +97,18 @@ async function handleGetCustomer(req, res) {
   } else res.sendStatus(400);
 }
 
+async function handleGetCustomers(req, res) {
+  try {
+    res.status(200).json(await Customer.find().exec());
+  } catch(err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+}
+
 function router(app) {
   app.get('/api/customer/:customerId', handleGetCustomer);
+  app.get('/api/customers', handleGetCustomers);
   app.post('/api/customer', handlePostCustomer);
   app.post('/api/login/customer', handlePostLoginCustomer);
 }
@@ -107,5 +121,7 @@ module.exports = {
   create,
   getById,
   getByUsername,
-  getByHash
+  getByHash,
+
+  Customer
 };

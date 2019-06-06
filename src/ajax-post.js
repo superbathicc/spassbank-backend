@@ -7,6 +7,8 @@
       this.addEventListener('submit', function(event) {
         event.preventDefault();
 
+        console.log('sending post');
+
         if($(this).attr('action')) {
           var then = function(data) {
             console.log(data);
