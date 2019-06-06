@@ -30,7 +30,7 @@ async function getByHash(hash) {
 
 /**
  * crates a new Customer
- * @param {Customer.Properties} properties 
+ * @param {Customer.Properties} properties
  */
 async function create(properties) {
   delete properties._id;
@@ -54,7 +54,7 @@ async function handlePostLoginCustomer(req, res) {
         crypto.createHash('sha256').update(req.body.password).digest('hex')
       );
       if(customer) {
-        req.session["Customer"] = customer;
+        req.session['Customer'] = customer;
         res.status(200).json(customer);
       } else {
         res.sendStatus(401);
@@ -73,8 +73,8 @@ async function handlePostCustomer(req, res) {
 
   if(req.body.username && req.body.password) {
     req.body.password = crypto.createHash('sha256')
-    .update(req.body.password)
-    .digest('hex');
+      .update(req.body.password)
+      .digest('hex');
     let customer = await create(req.body);
     res.status(201).json(customer);
   } else {
@@ -87,7 +87,7 @@ async function handleGetCustomer(req, res) {
     try {
       res.status(200).json(await getById(req.params.customerId));
     } catch(err) {
-      console.log(err)
+      console.log(err);
       res.sendStatus(500);
     }
   } else res.sendStatus(400);
@@ -100,7 +100,7 @@ function router(app) {
 }
 
 module.exports = {
-  router, 
+  router,
 
   handlePostLoginCustomer,
 
@@ -108,4 +108,4 @@ module.exports = {
   getById,
   getByUsername,
   getByHash
-}
+};

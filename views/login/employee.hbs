@@ -2,14 +2,14 @@
   {{#*inline "title"}}
   {{text req "login_submit"}}
   {{/inline}}
-  
+
   {{#*inline "content"}}
   <section>
     <article>
       <h1>{{text req "employee"}} {{text req "login_submit"}}</h1>
       <svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="rgb(0,192,160)" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v1c0 .55.45 1 1 1h14c.55 0 1-.45 1-1v-1c0-2.66-5.33-4-8-4z"/></svg>
-      
-      <form method="POST" action="/api/login/employee" target="_blank">  
+
+      <form method="POST" action="/api/login/employee" target="_blank" class="login">
         <label for="username">{{text req 'label_username'}}</label><br>
         <input type="text" name="username" /><br>
         <label for="password">{{text req 'label_password'}}</label><br>
@@ -18,5 +18,7 @@
       </form>
     </article>
   </section>
+
+  <script src="/src/ajax-post.js"></script>
   {{/inline}}
 {{/layouts/main}}

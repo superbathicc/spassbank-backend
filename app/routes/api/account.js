@@ -1,10 +1,12 @@
 const Account = require('../../models/Account');
+// eslint-disable-next-line no-unused-vars
 const Customer = require('../../models/Customer');
-const crypto = require('crypto')
+const crypto = require('crypto');
 const customerApi = require('./customer');
 const atmApi = require('./atm');
 const transactionApi = require('./transaction');
 const money = require('../../../config/money');
+const mongoose = require('mongoose');
 
 async function getById(id) {
   var q = Account.findById(id);
@@ -56,7 +58,7 @@ async function deposit(account, items, atmId) {
     account.balance += await atmApi.deposit(await atmApi.getById(atmId), items);
     return await account.save();
   } else {
-    throw new TypeError("account was not an Account");
+    throw new TypeError('account was not an Account');
   }
 }
 
@@ -66,13 +68,13 @@ async function withdraw(account, amount, atmId) {
       let atm = await atmApi.getById(atmId);
       let withdrawn = atmApi.withdraw(atm, amount);
       account.balance -= Object.keys(withdrawn)
-      .map(key => withdrawn[key] * money[key].value)
-      .reduce((a, b) => a + b, 0);
-      acount = await account.save();
+        .map(key => withdrawn[key] * money[key].value)
+        .reduce((a, b) => a + b, 0);
+      account = await account.save();
       return withdrawn;
-    } else throw new Error("Cannot withdraw more than there is on this account.");
+    } else throw new Error('Cannot withdraw more than there is on this account.');
   } else {
-    throw new TypeError("account was not an Account");
+    throw new TypeError('account was not an Account');
   }
 }
 
@@ -82,17 +84,17 @@ async function transaction(sender, target, amount) {
     if(amount > 0) {
       sender.balance -= amount;
       target.balance += amount;
-      
+
       sender = await sender.save();
       target = await target.save();
 
       return await transactionApi.create(sender, target, amount);
-    } else throw new Error("amount must be positive");
+    } else throw new Error('amount must be positive');
   }
 }
 
 async function handleGetAccount(req, res) {
-  if(req.session["Account"] || req.session["Admin"]) {
+  if(req.session['Account'] || req.session['Admin']) {
     try {
       res.status(200).json(await getById(req.params.accountId));
     } catch(err) {
@@ -112,11 +114,11 @@ async function handlePostLoginAccount(req, res) {
         crypto.createHash('sha256').update(req.body.password).digest('hex')
       );
       if(account) {
-        req.session["Account"] = account;
+        req.session['Account'] = account;
         res.status(200).json(account);
-      } else res.sendStatus(401)
+      } else res.sendStatus(401);
     } catch(err) {
-	  console.log(err);
+      console.log(err);
       res.sendStatus(500);
     }
   } else {
@@ -141,11 +143,11 @@ async function handlePostAccount(req, res) {
 }
 
 async function handlePostAccountTransaction(req, res) {
-  if(typeof req.session["Account"] == 'object' && req.session["Account"] instanceof Account) {
+  if(typeof req.session['Account'] == 'object' && req.session['Account'] instanceof Account) {
     if(typeof req.body.accountNumber == 'string' && typeof req.body.amount == 'number') {
       try {
         let target = await getOneByNumber(Number(req.body.accountNumber));
-        res.status(201).json(await transactionApi.create(req.session["Account"], target, amount))
+        res.status(201).json(await transactionApi.create(req.session['Account'], target, req.body.amount));
       } catch(err) {
         res.sendStatus(500);
       }
@@ -168,7 +170,7 @@ async function handlePostAccountWithdraw(req, res) {
 }
 
 async function handlePostAccountDeposit(req, res) {
-  let account = await getOneByHash(req.body.accountHash)
+  let account = await getOneByHash(req.body.accountHash);
   if(typeof req.body.items == 'object') {
     if(req.body.atmId) {
       try {
@@ -184,14 +186,14 @@ async function handlePostAccountDeposit(req, res) {
 async function handleGetAccounts(req, res) {
   var q = Account.find();
 
-  if(req.session["Admin"] || req.session["Employee"]) {
+  if(req.session['Admin'] || req.session['Employee']) {
     if(req.query.customer) {
-      q.where("customer").equals(mongoose.Types.ObjectId(req.query.customer));
+      q.where('customer').equals(mongoose.Types.ObjectId(req.query.customer));
     }
   }
 
-  if(req.session["Customer"]) {
-    q.where("customer").equals(req.session["Customer"]._id);
+  if(req.session['Customer']) {
+    q.where('customer').equals(req.session['Customer']._id);
   }
 
   res.status(200).json(await q.exec());
@@ -223,4 +225,4 @@ module.exports = {
   transaction,
   getById,
   getOneByHash
-}
+};

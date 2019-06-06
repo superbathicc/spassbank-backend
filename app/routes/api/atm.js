@@ -1,6 +1,6 @@
 const ATM = require('../../models/ATM');
 const crypto = require('crypto');
-const money = require("../../../config/money");
+const money = require('../../../config/money');
 
 async function getById(id) {
   let q = ATM.findById(id);
@@ -31,29 +31,29 @@ async function create(password, description) {
 async function withdraw(atm, amount) {
   if(typeof atm === 'object' && atm instanceof ATM) {
     if(Object.keys(atm.inventory)
-    .map(key => money[key].value * atm.inventory[key])
-    .reduce((a, b) => a + b, 0) >= amount) {
+      .map(key => money[key].value * atm.inventory[key])
+      .reduce((a, b) => a + b, 0) >= amount) {
       var result = money;
       Object.keys(money).sort((a,b) => money[b].value - money[a].value)
-      .forEach(moneyKey => {
-        let v = money[moneyKey].value;
-        if(amount > v) {
-          let needed = Math.trunc(amount / v);
-          if(needed <= atm.inventory[moneyKey]) {
-            atm.inventory[moneyKey] -= needed;
-            amount -= needed * money[moneyKey].value;
-            result[moneyKey] = needed;
-          } else {
-            let took = atm.inventory[moneyKey];
-            atm.inventory[moneyKey] = 0;
-            amount -= money[moneyKey].value * took;
-            result[moneyKey] = took;
+        .forEach(moneyKey => {
+          let v = money[moneyKey].value;
+          if(amount > v) {
+            let needed = Math.trunc(amount / v);
+            if(needed <= atm.inventory[moneyKey]) {
+              atm.inventory[moneyKey] -= needed;
+              amount -= needed * money[moneyKey].value;
+              result[moneyKey] = needed;
+            } else {
+              let took = atm.inventory[moneyKey];
+              atm.inventory[moneyKey] = 0;
+              amount -= money[moneyKey].value * took;
+              result[moneyKey] = took;
+            }
           }
-        }
-      });
+        });
       atm = await atm.save();
       return result;
-    } else throw new Error("You cannot withdraw more money than stored in the atm")
+    } else throw new Error('You cannot withdraw more money than stored in the atm');
   }
 }
 
@@ -62,7 +62,7 @@ async function deposit(atm, items) {
     Object.keys(money).forEach(key => {
       atm.inventory[key] += items[key];
     });
-  } else throw new TypeError("atm was not an ATM");
+  } else throw new TypeError('atm was not an ATM');
 }
 
 async function handleGetATM(req, res) {
@@ -98,18 +98,18 @@ async function handlePostLoginATM(req, res) {
   if(!req.body) res.sendStatus(400);
   if(req.body.id && req.body.password) {
     try {
-      let atm = await getByHash(crypto.createHash("sha256").update([
+      let atm = await getByHash(crypto.createHash('sha256').update([
         req.body.id,
         crypto.createHash('sha256').update(req.body.password).digest('hex')
       ].join('|')).digest('hex'));
       if(atm) {
-        req.session["ATM"] = atm;
+        req.session['ATM'] = atm;
         res.status(200).json(atm);
       } else {
         res.sendStatus(401);
       }
     } catch(err) {
-		console.log(err);
+      console.log(err);
       res.sendStatus(500);
     }
   } else {
@@ -128,7 +128,7 @@ function router(app) {
 
 module.exports = {
   router,
-  
+
   handleGetATM,
   handleGetATMs,
   handlePostATM,
@@ -137,4 +137,4 @@ module.exports = {
   getById,
   deposit,
   withdraw
-}
+};

@@ -1,5 +1,5 @@
 bank_name: Spaßbank
-welcome: Herzlich Willkommen bei der Spaßbank. 
+welcome: Herzlich Willkommen bei der Spaßbank.
 
 login: Anmeldung
 label_username: Benutzername
@@ -15,16 +15,18 @@ status: Status
 check_status: Status prüfen
 refill: Geld nachfüllen
 
-money_supply: Geldstand 
+money_supply: Geldstand
 
 last_maintenance: Letzte Wartung
 next_maintenance: Nächste geplante Wartung
 
 submit: Senden
 
-current: Aktuell
-
 amount_to_refill: Wie viel Geld wollen Sie nachfüllen?
+
+current: Aktuell
 
 admin: Systemverwalter
 employee: Angestellte(r) der Spaßbank
+customer: Spassbank Kunde
+account: Spassbank Konto

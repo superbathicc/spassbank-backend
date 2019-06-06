@@ -4,4 +4,4 @@ var port = process.env.SBB_PORT || 80;
 
 module.exports = {
   port
-}
+};

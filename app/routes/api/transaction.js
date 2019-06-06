@@ -3,7 +3,7 @@ const Transaction = require('../../models/Transaction');
 
 async function getById(id) {
   let q = Transaction.findById(id);
-  q.populate("sender").populate("target");
+  q.populate('sender').populate('target');
   return await q.exec();
 }
 
@@ -12,7 +12,7 @@ async function create(sender, target, amount) {
     sender: sender._id,
     target: target._id,
     balance: amount
-  })
+  });
   let created = await transaction.save();
   return created;
 }
@@ -65,7 +65,7 @@ async function handleGetTransactions(req, res) {
     }
   }
 
-  q.populate("sender").populate("target");
+  q.populate('sender').populate('target');
 
   var result = await q.exec();
   res.status(200).json(result);
@@ -81,7 +81,7 @@ module.exports = {
 
   handleGetTransaction,
   handleGetTransactions,
-  
+
   create,
   getById,
-}
+};

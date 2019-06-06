@@ -1,5 +1,4 @@
 bank_name: Spassbank
-
 welcome: Welcome to the Spassbank.
 
 login: Login
@@ -29,3 +28,5 @@ current: Current
 
 admin: System Administrator
 employee: Spassbank Employee
+customer: Spassbank Customer
+account: Spassbank Account

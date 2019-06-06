@@ -38,21 +38,21 @@ async function create(username, password) {
 
 async function handleGetAdmin(req, res) {
   if(req.params.adminId) {
-      getById(req.params.adminId)
+    getById(req.params.adminId)
       .then(admin => {
-        res.status(200).json(admin)
+        res.status(200).json(admin);
       }).catch(err => {
         console.log(err);
         res.sendStatus(404);
-      })
+      });
   } else {
-    res.sendStatus(400)
+    res.sendStatus(400);
   }
 }
 
 async function handleGetAdmins(req, res) {
   let q = Admin.find();
-  
+
   if(req.query.username) {
     q.where('username').regex(new RegExp(req.query.username));
   }
@@ -78,7 +78,7 @@ async function handlePostLoginAdmin(req, res) {
         crypto.createHash('sha256').update(req.body.password).digest('hex')
       );
       if(admin) {
-        req.session["Admin"] = admin;
+        req.session['Admin'] = admin;
         res.status(200).json(admin);
       } else {
         res.sendStatus(401);
@@ -102,7 +102,7 @@ function router(app) {
 
 new Promise(async (resolve) => {
   if(await Admin.countDocuments().exec() <= 0) {
-    resolve(await create("admin", "$admin0!"));
+    resolve(await create('admin', '$admin0!'));
   }
 }).then(admin => {
   console.log('created admin', admin);
@@ -112,11 +112,11 @@ new Promise(async (resolve) => {
 
 module.exports = {
   router,
-  
+
   handleGetAdmin,
   handlePostAdmin,
   handlePostLoginAdmin,
-  
+
   create,
   getById,
   getOneByHash,

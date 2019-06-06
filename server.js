@@ -31,7 +31,7 @@ localeDirs.forEach((localeFile) => {
   var content = YAML.parse(fs.readFileSync(path.join(__dirname, './config/locales', localeFile)).toString('utf8'));
   if(nsplit.length >= 2) {
     if(typeof locales[nsplit[0]] !== 'object') {
-      locales[nsplit[0]] = {}
+      locales[nsplit[0]] = {};
     }
     locales[nsplit[0]][nsplit[1]] = content;
   } else {
@@ -61,13 +61,13 @@ function getLocaleString(l, key) {
       }
     }
   } else {
-    return locale["en"].value[key];
+    return locale['en'].value[key];
   }
 }
 
 let hbs = handlebars.create();
 hbs.registerHelper('text', function(req, key) {
-  return getLocaleString(req.headers["accept-language"], key);
+  return getLocaleString(req.headers['accept-language'], key);
 });
 
 app.engine('hbs', expressHandlebars({
@@ -75,18 +75,18 @@ app.engine('hbs', expressHandlebars({
   handlebars: hbs,
   layoutsDir: path.join(__dirname, 'views', 'layouts'),
   partialsDir: path.join(__dirname, 'views', 'partials')
-}))
+}));
 
 var sess = {
-  secret: "why are you not laughing",
+  secret: 'why are you not laughing',
   resave: false,
   saveUninitialized: true,
-}
+};
 
 app.set('view engine', 'hbs');
 if(app.get('env') === 'production') {
   app.set('trust proxy', 1);
-  sess.cookie = {secure: true}
+  sess.cookie = {secure: true};
 }
 
 
@@ -100,7 +100,7 @@ app.use(bodyParser.json({
 }));
 
 app.use(function(req, res, next) {
-  console.log(`[${new Date()}][${req.method}]${req.path} :\nheaders: ${JSON.stringify(req.headers, null, "  ")}\nbody: ${JSON.stringify(req.body, null, "  ")}`);
+  console.log(`[${new Date()}][${req.method}]${req.path} :\nheaders: ${JSON.stringify(req.headers, null, '  ')}\nbody: ${JSON.stringify(req.body, null, '  ')}`);
   next();
 });
 
@@ -114,8 +114,8 @@ app.use(function(req, res, next) {
 app.use(session(sess));
 
 app.use((req, res, next) => {
-	console.log("session:", req.session);
-	next();
+  console.log('session:', req.session);
+  next();
 });
 
 router(app);
