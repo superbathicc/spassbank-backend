@@ -1,44 +1,44 @@
 module.exports = {
-  "1ct": {
+  '1ct': {
     value: 1
   },
-  "2ct": {
+  '2ct': {
     value: 2
   },
-  "5ct": {
+  '5ct': {
     value: 5
   },
-  "10ct": {
+  '10ct': {
     value: 10
   },
-  "20ct": {
+  '20ct': {
     value: 20
   },
-  "50ct": {
+  '50ct': {
     value: 50
   },
-  "1eur": {
+  '1eur': {
     value: 100
   },
-  "2eur": {
+  '2eur': {
     value: 200
   },
-  "5eur": {
+  '5eur': {
     value: 500
   },
-  "10eur": {
+  '10eur': {
     value: 1000
   },
-  "20eur": {
+  '20eur': {
     value: 2000
   },
-  "50eur": {
+  '50eur': {
     value: 5000
   },
-  "100eur": {
+  '100eur': {
     value: 10000
   },
-  "200eur": {
+  '200eur': {
     value: 20000
   }
-}
+};

@@ -62,6 +62,10 @@ async function deposit(atm, items) {
     Object.keys(money).forEach(key => {
       atm.inventory[key] += items[key];
     });
+
+    return Object.keys(money).map(key => {
+      return items[key] * money[key].value;
+    }).reduce((a, b) => a + b);
   } else throw new TypeError('atm was not an ATM');
 }
 
