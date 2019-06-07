@@ -1,12 +1,12 @@
 {{#> 'layouts/main'}}
 {{#*inline "title"}}
-Create Admin
+{{text req "create_account"}}
 {{/inline}}
 
 {{#*inline "content"}}
 <section>
   <article>
-    <h2>Create Account</h2>
+    <h1>{{text req "create_account"}}</h1>
 
     <script>
       function handlesuccess(data) {
@@ -35,12 +35,12 @@ Create Admin
 
     <form action="/api/account" method="POST" class="ajax-post"
     onsuccess="handlesuccess" onfail="handlefail">
-      <label for="customerId">Customer</label>
-      <select name="customerId" id="customerId"></select>
+      <label for="customerId">{{text req "customer"}}</label>
+      <select name="customerId" id="customerId"></select><br/>
       <label for="password">{{text req "label_password"}}</label>
       <input type="password" autocomplete="new-password" name="password" /><br />
-      <label for="balance">Balance</label>
-      <input type="number" name="balance">
+      <label for="balance">{{text req "balance"}}</label>
+      <input type="number" name="balance"><br />
       <button type="submit">{{text req "submit_create"}}</button>
     </form>
   </article>

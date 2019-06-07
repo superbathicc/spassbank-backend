@@ -47,3 +47,13 @@ employee_actions: Aktionen für Angestellte
 admin_actions: Aktionen für Admins
 
 homepage: Startseite
+
+birthdate: Geburtsdatum
+
+month: Monat
+day: Tag
+year: Jahr
+
+create_customer: Kunde erstellen
+create_account: Konto erstellen
+balance: Kontostand

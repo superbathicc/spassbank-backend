@@ -47,3 +47,13 @@ employee_actions: Employee Actions
 admin_actions: Admin Actions
 
 homepage: Homepage
+
+birthdate: Date of birth
+
+month: Month
+day: Day
+year: Year
+
+create_customer: Create Customer
+create_account: Create Account
+balance: Balance
