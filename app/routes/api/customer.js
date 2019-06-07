@@ -1,6 +1,5 @@
 const Customer = require('../../models/Customer');
 const crypto = require('crypto');
-const auth = require('../../lib/auth');
 
 async function getById(id) {
   let q = Customer.findById(id);

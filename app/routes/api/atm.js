@@ -33,24 +33,34 @@ async function withdraw(atm, amount) {
     if(Object.keys(money)
       .map(key => key.startsWith('$') ? 0 : money[key].value * (atm.inventory[key] || 0))
       .reduce((a, b) => a + b, 0) >= amount) {
-      var result = money;
-      Object.keys(money).sort((a,b) => money[b].value - money[a].value)
-        .forEach(moneyKey => {
-          let v = money[moneyKey].value;
-          if(amount > v) {
-            let needed = Math.trunc(amount / v);
-            if(needed <= atm.inventory[moneyKey]) {
-              atm.inventory[moneyKey] -= needed;
-              amount -= needed * money[moneyKey].value;
-              result[moneyKey] = needed;
-            } else {
+      let sorted = Object.keys(money)
+        .sort((a,b) => money[b].value - money[a].value);
+      let result = sorted.map(moneyKey => {
+        let v = money[moneyKey].value;
+        if(amount >= v) {
+          let needed = Math.trunc(amount / v);
+          if(needed <= atm.inventory[moneyKey]) {
+            atm.inventory[moneyKey] -= needed;
+            amount -= needed * money[moneyKey].value;
+            return {unit: moneyKey, amount: needed};
+          } else {
+            if(atm.inventory[moneyKey] > 0) {
               let took = atm.inventory[moneyKey];
               atm.inventory[moneyKey] = 0;
               amount -= money[moneyKey].value * took;
-              result[moneyKey] = took;
+              return {unit: moneyKey, amount: took};
+            } else {
+              if(moneyKey !== sorted[sorted.length - 1]) {
+                return null;
+              } else {
+                throw new Error(`Cannot take ${needed} units from ${moneyKey} because it is empty`);
+              }
             }
           }
-        });
+        } else {
+          return null;
+        }
+      }).filter(_ => _ !== null);
       atm = await atm.save();
       return result;
     } else throw new Error('You cannot withdraw more money than stored in the atm');

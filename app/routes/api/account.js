@@ -7,7 +7,6 @@ const atmApi = require('./atm');
 const transactionApi = require('./transaction');
 const money = require('../../../config/money');
 const mongoose = require('mongoose');
-const auth = require('../../lib/auth');
 
 async function getById(id) {
   var q = Account.findById(id);
@@ -175,7 +174,7 @@ async function handlePostAccountTransaction(req, res) {
 }
 
 async function handlePostAccountWithdraw(req, res) {
-  let account = await getOneByHash(req.body.accountHash);
+  let account = await getOneByHash(req.body.accountHash) || await Account.findById(req.body.accountId).exec();
   if(req.body.amount && Number(req.body.amount)) {
     if(req.body.atmId) {
       try {
