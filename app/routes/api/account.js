@@ -73,7 +73,7 @@ async function withdraw(account, amount, atmId) {
   if(typeof account == 'object' && account instanceof Account) {
     if(account.balance > amount) {
       let atm = await atmApi.getById(atmId);
-      let withdrawn = atmApi.withdraw(atm, amount);
+      let withdrawn = await atmApi.withdraw(atm, amount);
       account.balance -= withdrawn
         .map(w => w.amount * money[w.unit].value)
         .reduce((a, b) => a + b, 0);
